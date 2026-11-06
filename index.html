@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#5e1f3a">
+<meta name="theme-color" content="#2c4a35">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Meu plano">
@@ -14,7 +14,7 @@
 <title>Meu plano alimentar</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Figtree:wght@400;600;700&display=swap">
 <style>
-:root{--bg:#fbf6f4;--card:#fff;--ink:#3a2430;--muted:#8b7580;--rose:#d98ca3;--blush:#f7e3e8;--pale:#fdf0f2;--accent:#5e1f3a;--on:#fff;--line:#efdde2;--shadow:0 6px 22px rgba(94,31,58,.07);--serif:Fraunces,Georgia,"Times New Roman",serif;--sans:Figtree,-apple-system,"Segoe UI",sans-serif;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{--bg:#f5f8f4;--card:#fff;--ink:#22302a;--muted:#6f8177;--rose:#8fbf9f;--blush:#dfeee3;--pale:#ebf4ee;--accent:#2c4a35;--on:#fff;--line:#d6e5da;--shadow:0 6px 22px color-mix(in srgb,var(--accent) 9%,transparent);--serif:Fraunces,Georgia,"Times New Roman",serif;--sans:Figtree,-apple-system,"Segoe UI",sans-serif;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *,*:before,*:after{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.5;-webkit-tap-highlight-color:transparent}
@@ -29,7 +29,7 @@ h1{font-size:34px;line-height:1.1}h2{font-size:22px;margin:26px 2px 12px}h3{font
 .top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:6px}
 .back{border:1px solid var(--line);background:var(--card);border-radius:50%;width:38px;height:38px;font-size:18px;color:var(--accent)}
 .hero{background:var(--accent);color:var(--on);border-radius:28px;padding:22px 20px 20px;margin:16px 0}
-.hero{background-size:cover;background-position:center}.hero.cv{min-height:240px;display:flex;flex-direction:column;justify-content:flex-end}.hero .muted{color:inherit}.sws{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0 4px}.sw{width:46px;height:46px;border-radius:50%;border:3px solid var(--card);box-shadow:0 0 0 1.5px var(--line)}.sw.on{box-shadow:0 0 0 3px var(--accent)}.hero h2{margin:0;font-size:26px}.hero .muted{color:inherit;opacity:.75}
+.hero{background-size:cover;background-position:center}.hero:not(.cv){background-image:url(icons/cover.svg);background-repeat:no-repeat;background-size:auto 125%;background-position:right center}.ic{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.14em}.q span.i .ic{width:24px;height:24px;color:var(--accent)}h1 .ic{width:.72em;height:.72em;color:var(--rose);margin-left:4px;vertical-align:-.02em}.hero.cv{min-height:240px;display:flex;flex-direction:column;justify-content:flex-end}.hero .muted{color:inherit}.sws{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0 4px}.sw{width:46px;height:46px;border-radius:50%;border:3px solid var(--card);box-shadow:0 0 0 1.5px var(--line)}.sw.on{box-shadow:0 0 0 3px var(--accent)}.hero h2{margin:0;font-size:26px}.hero .muted{color:inherit;opacity:.75}
 .petals{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:18px}
 .petal{border:0;background:rgba(255,255,255,.14);border-radius:50% 50% 50% 14px;aspect-ratio:1;display:grid;place-items:center;font-size:20px;position:relative;color:inherit;opacity:.8}
 .petal.d{background:var(--rose);opacity:1;border-radius:50% 14px 50% 50%}
@@ -84,6 +84,15 @@ svg text{fill:var(--muted);font-family:var(--sans)}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19C4 11 9 5 19 4c1 9-4 15-12 15"/><path d="M5 19c3-5 6-8 10-10"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.5C6.5 4.5 9.5 4.5 12 6c2.5-1.5 5.5-1.5 8-.5V19c-2.5-1-5.5-1-8 .5-2.5-1.5-5.5-1.5-8-.5z"/><path d="M12 6v13.500"/></symbol>
+<symbol id="i-cal" viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="14.5" rx="3"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/></symbol>
+<symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11 12 4l8 7"/><path d="M6 9.5V19.5h12V9.5"/><path d="M10 19.5v-5h4v5"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20S4 15 4 9.5A4.200 4.200 0 0 1 12 7.500a4.200 4.200 0 0 1 8 2C20 15 12 20 12 20z"/></symbol>
+<symbol id="i-cart" viewBox="0 0 24 24"><path d="M3.500 4.500H6l2 10h9.5l1.800-7H7"/><circle cx="9.5" cy="19" r="1.300"/><circle cx="16.500" cy="19" r="1.300"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M5 20V11M12 20V5M19 20v-6"/></symbol>
+</defs></svg>
 <main class="app">
 
 <section class="page on" id="p-home">
@@ -96,11 +105,11 @@ svg text{fill:var(--muted);font-family:var(--sans)}
     <div class="muted" id="hMsg" style="margin-top:6px">Continue registrando no seu ritmo.</div>
   </div>
   <div class="quick">
-    <button class="q big" data-go="shop"><span class="i">🛒</span><div><b>Supermercado</b><span class="muted" id="hShop"></span></div></button>
-    <button class="q" id="qDiary"><span class="i">🌷</span><b>Meu diário</b><span class="muted">Registrar refeições</span></button>
-    <button class="q" data-go="cal"><span class="i">📅</span><b>Calendário</b><span class="muted">Ver dias anteriores</span></button>
-    <button class="q" data-go="favs"><span class="i">♡</span><b>Favoritos</b><span class="muted" id="hFav"></span></button>
-    <button class="q" data-go="hist"><span class="i">✿</span><b>Meu histórico</b><span class="muted">Hábitos e fotos</span></button>
+    <button class="q big" data-go="shop"><span class="i"><svg class="ic"><use href="#i-cart"/></svg></span><div><b>Supermercado</b><span class="muted" id="hShop"></span></div></button>
+    <button class="q" id="qDiary"><span class="i"><svg class="ic"><use href="#i-book"/></svg></span><b>Meu diário</b><span class="muted">Registrar refeições</span></button>
+    <button class="q" data-go="cal"><span class="i"><svg class="ic"><use href="#i-cal"/></svg></span><b>Calendário</b><span class="muted">Ver dias anteriores</span></button>
+    <button class="q" data-go="favs"><span class="i"><svg class="ic"><use href="#i-heart"/></svg></span><b>Favoritos</b><span class="muted" id="hFav"></span></button>
+    <button class="q" data-go="hist"><span class="i"><svg class="ic"><use href="#i-chart"/></svg></span><b>Meu histórico</b><span class="muted">Hábitos e fotos</span></button>
   </div>
   <div class="card" id="installCard">
     <h3>Instalar no celular</h3>
@@ -124,6 +133,10 @@ svg text{fill:var(--muted);font-family:var(--sans)}
   <div class="card"><h3>Cor do app</h3><div class="sws" id="sws"></div><div class="muted" id="palName"></div></div>
   <div class="card"><h3>Foto de capa</h3><p class="muted" style="margin:6px 0 0">Aparece no topo da tela inicial.</p><div class="ma"><label class="pbtn">Escolher foto<input type="file" id="coverFile" accept="image/*"></label><button class="btn ghost sm" id="coverRm">Remover</button></div></div>
   <div class="card"><h3>Meu plano</h3><p class="muted" id="planInfo" style="margin:6px 0 12px"></p><button class="btn" id="planUpd">Atualizar meu plano</button></div>
+  <div class="card"><h3>Sair</h3><p class="muted" style="margin:6px 0 12px">Volta para a tela de boas-vindas, como no primeiro acesso.</p>
+    <button class="btn ghost" id="exitAsk">Sair</button>
+    <div id="exitBox" hidden><p style="margin:0 0 4px"><b>Como você quer sair?</b></p><p class="muted" style="margin:0 0 4px">Você volta para a tela de boas-vindas para montar ou carregar um plano.</p>
+      <div class="ma"><button class="btn" id="exitKeep">Sair e manter meus registros</button><button class="btn ghost" id="exitWipe">Sair e apagar tudo neste aparelho</button><button class="btn ghost sm" id="exitNo">Cancelar</button></div></div></div>
 </section>
 
 <section class="page" id="p-day">
@@ -155,8 +168,8 @@ svg text{fill:var(--muted);font-family:var(--sans)}
   <div class="card">
     <div class="row" style="justify-content:space-between"><b>Progresso das compras</b><span class="muted" id="sCount"></span></div>
     <div class="bar"><i id="sBar"></i></div>
-    <input type="search" id="sSearch" placeholder="Buscar um item" aria-label="Buscar item">
-    <div class="row" style="margin-top:12px;flex-wrap:wrap"><button class="chip" id="sFilter">Só o que uso nas minhas refeições</button><button class="chip" id="sClear">Desmarcar tudo</button></div>
+    <p class="muted" style="margin:0 0 10px">Esta é a sua lista base. Toque no × para tirar um item e use o campo abaixo para adicionar outros.</p><input type="search" id="sSearch" placeholder="Buscar um item" aria-label="Buscar item">
+    <div class="row" style="margin-top:12px;flex-wrap:wrap"><button class="chip" id="sFilter">Só o que uso nas minhas refeições</button><button class="chip" id="sClear">Desmarcar tudo</button><button class="chip" id="sRestore" hidden></button></div>
     <div class="muted" id="sNote" style="margin-top:8px"></div>
   </div>
   <div class="card"><div class="row"><input type="text" id="sNew" placeholder="Adicionar item" aria-label="Novo item" style="margin-top:0"><button class="btn" id="sAdd">Adicionar</button></div>
@@ -173,7 +186,7 @@ svg text{fill:var(--muted);font-family:var(--sans)}
     <div class="card"><h3>Refeições registradas por dia</h3><div id="chart"></div>
       <div class="stats"><div class="stat"><b id="sDays">0</b><span class="muted">dias com registro</span></div><div class="stat"><b id="sMeals">0</b><span class="muted">refeições marcadas</span></div><div class="stat"><b id="sPhotos">0</b><span class="muted">fotos</span></div></div></div>
     <div class="card"><h3>Opções que você mais escolhe</h3><div id="ranking"></div></div>
-    <p class="muted">Esses números só mostram seus hábitos. Não há metas nem julgamento. 🌷</p>
+    <p class="muted">Esses números só mostram seus hábitos. Não há metas nem julgamento.</p>
   </div>
 
   <div id="t-gallery" hidden><div id="galleryBox"></div></div>
@@ -192,11 +205,11 @@ svg text{fill:var(--muted);font-family:var(--sans)}
 </main>
 
 <nav class="nav"><div>
-<button data-go="home" data-n="home"><span>⌂</span>Início</button>
-<button data-go="favs" data-n="favs"><span>♡</span>Favoritos</button>
-<button data-go="cal" data-n="cal"><span>▦</span>Calendário</button>
-<button data-go="shop" data-n="shop"><span>🛒</span>Compras</button>
-<button data-go="hist" data-n="hist"><span>✿</span>Histórico</button>
+<button data-go="home" data-n="home"><span><svg class="ic"><use href="#i-home"/></svg></span>Início</button>
+<button data-go="favs" data-n="favs"><span><svg class="ic"><use href="#i-heart"/></svg></span>Favoritos</button>
+<button data-go="cal" data-n="cal"><span><svg class="ic"><use href="#i-cal"/></svg></span>Calendário</button>
+<button data-go="shop" data-n="shop"><span><svg class="ic"><use href="#i-cart"/></svg></span>Compras</button>
+<button data-go="hist" data-n="hist"><span><svg class="ic"><use href="#i-chart"/></svg></span>Histórico</button>
 </div></nav>
 <dialog id="lb"><img id="lbImg" alt="Foto da refeição"><p id="lbInfo" class="muted"></p><div class="ma"><button class="btn ghost sm" id="lbDel">Excluir foto</button><button class="btn sm" id="lbClose">Fechar</button></div></dialog>
 <div class="toast" id="toast" role="status"></div>
@@ -217,7 +230,7 @@ const $=id=>document.getElementById(id),esc=s=>String(s).replace(/[&<>"']/g,c=>(
 const L=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}};
 const today=new Date();today.setHours(12,0,0,0);
 let sel=new Date(today),mCur=new Date(today.getFullYear(),today.getMonth(),1),page="home",range="w",onlyMine=false,lbRef=null;
-let records=L("mealDiary",{}),fav=L("mealFav3",[]).filter(x=>String(x).includes(":")),shop=L("shop3",{checked:{},custom:[]}),lastBk=L("lastBackup3",null);
+let records=L("mealDiary",{}),fav=L("mealFav3",[]).filter(x=>String(x).includes(":")),shop=L("shop3",{checked:{},custom:[],hidden:[]}),lastBk=L("lastBackup3",null);
 function save(){try{localStorage.setItem("mealDiary",JSON.stringify(records));localStorage.setItem("mealFav3",JSON.stringify(fav));localStorage.setItem("shop3",JSON.stringify(shop));if(lastBk)localStorage.setItem("lastBackup3",JSON.stringify(lastBk));return true}catch{toast("Sem espaço para salvar. Faça um backup e exclua fotos antigas.");return false}}
 function toast(t){const e=$("toast");e.textContent=t;e.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove("on"),3200)}
 const key=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
@@ -234,14 +247,28 @@ function go(p){if(!plan)p="setup";page=p;document.querySelectorAll(".page").forE
 document.addEventListener("click",e=>{const g=e.target.closest("[data-go]");if(g)go(g.dataset.go)});
 
 /* Plano, aparência e ajustes */
-const PALS=[["Rosé","#fbf6f4","#5e1f3a","#d98ca3","#f7e3e8","#fdf0f2","#efdde2"],["Lavanda","#f8f5fb","#3f2a63","#b69ce0","#ebe3f7","#f3eefa","#e2d9f0"],["Sálvia","#f5f8f4","#2c4a35","#8fbf9f","#dfeee3","#ebf4ee","#d6e5da"],["Pêssego","#fdf6f1","#7a3417","#f0a47c","#fbe4d6","#fdefe6","#f1dccf"],["Oceano","#f3f8fb","#17405c","#7fb6d6","#dcecf5","#e9f3f9","#d2e4ee"]];
-let plan=L("plan3",null),pal=L("pal3",0),cover=L("cover3",null),draft=null;
+const PALS=[
+{n:"Sálvia",bg:"#f5f8f4",ac:"#2c4a35",ro:"#8fbf9f",bl:"#dfeee3",pa:"#ebf4ee",li:"#d6e5da",ink:"#22302a",mu:"#6f8177"},
+{n:"Oceano",bg:"#f3f8fb",ac:"#17405c",ro:"#7fb6d6",bl:"#dcecf5",pa:"#e9f3f9",li:"#d2e4ee",ink:"#1d2f3b",mu:"#6b8191"},
+{n:"Grafite",bg:"#f6f6f4",ac:"#2f3437",ro:"#7d878d",bl:"#e6e8e9",pa:"#efefee",li:"#dcdedf",ink:"#23272a",mu:"#757b80"},
+{n:"Terra",bg:"#f8f5f0",ac:"#5a3d2b",ro:"#c08a5a",bl:"#f0e3d3",pa:"#f6ede2",li:"#e6d9c8",ink:"#33261e",mu:"#8a7765"},
+{n:"Pêssego",bg:"#fdf6f1",ac:"#7a3417",ro:"#f0a47c",bl:"#fbe4d6",pa:"#fdefe6",li:"#f1dccf",ink:"#3a2a22",mu:"#8b7a70"},
+{n:"Lavanda",bg:"#f8f5fb",ac:"#3f2a63",ro:"#b69ce0",bl:"#ebe3f7",pa:"#f3eefa",li:"#e2d9f0",ink:"#2d2540",mu:"#7c7590"},
+{n:"Rosé",bg:"#fbf6f4",ac:"#5e1f3a",ro:"#d98ca3",bl:"#f7e3e8",pa:"#fdf0f2",li:"#efdde2",ink:"#3a2430",mu:"#8b7580"}];
+const OLDPAL=["Rosé","Lavanda","Sálvia","Pêssego","Oceano"];
+function loadPal(){let n=L("pal4",null);if(n===null){const o=L("pal3",null);n=o===null?"Sálvia":OLDPAL[o]||"Sálvia"}const k=PALS.findIndex(x=>x.n===n);return k<0?0:k}
+let plan=L("plan3",null),pal=loadPal(),cover=L("cover3",null),draft=null;
 function applyPlan(p){plan=p;meals=p.meals;groceries=p.groceries.map(g=>Array.isArray(g)?g:[g.n,g.c,[String(g.n).toLowerCase().split(/[ (,—-]/)[0]]])}
 function savePlan(p){applyPlan(p);try{localStorage.setItem("plan3",JSON.stringify(p))}catch{toast("Não foi possível salvar o plano.")}}
 if(plan)applyPlan(plan);
-function applyLook(){const p=PALS[pal]||PALS[0],r=document.documentElement.style;["--bg","--accent","--rose","--blush","--pale","--line"].forEach((v,i)=>r.setProperty(v,p[i+1]));document.querySelector("meta[name=theme-color]").content=p[2];const h=document.querySelector(".hero");h.classList.toggle("cv",!!cover);h.style.backgroundImage=cover?`linear-gradient(rgba(20,5,12,.15),rgba(20,5,12,.65)),url(${cover})`:""}
-function renderSet(){$("sws").innerHTML=PALS.map((p,i)=>`<button class="sw ${i===pal?"on":""}" data-pal="${i}" title="${p[0]}" aria-label="${p[0]}" style="background:linear-gradient(135deg,${p[2]} 50%,${p[3]} 50%)"></button>`).join("");$("palName").textContent=PALS[pal][0];$("coverRm").hidden=!cover;$("planInfo").textContent=plan?`Plano atual: ${meals.length} refeições e ${groceries.length} itens de compras. Ao atualizar, seu histórico é mantido.`:""}
-$("sws").onclick=e=>{const b=e.target.closest("[data-pal]");if(!b)return;pal=+b.dataset.pal;try{localStorage.setItem("pal3",pal)}catch{}applyLook();renderSet()};
+function applyLook(){const p=PALS[pal]||PALS[0],r=document.documentElement.style;[["--bg","bg"],["--accent","ac"],["--rose","ro"],["--blush","bl"],["--pale","pa"],["--line","li"],["--ink","ink"],["--muted","mu"]].forEach(([v,k])=>r.setProperty(v,p[k]));document.querySelector("meta[name=theme-color]").content=p.ac;const h=document.querySelector(".hero");h.classList.toggle("cv",!!cover);h.style.backgroundImage=cover?`linear-gradient(rgba(10,10,10,.15),rgba(10,10,10,.65)),url(${cover})`:""}
+function doExit(wipe){["plan3"].forEach(k=>localStorage.removeItem(k));plan=null;meals=[];groceries=[];draft=null;shop.checked={};shop.hidden=[];
+if(wipe){["mealDiary","mealFav3","shop3","lastBackup3","cover3","pal3","pal4"].forEach(k=>localStorage.removeItem(k));records={};fav=[];shop={checked:{},custom:[],hidden:[]};lastBk=null;cover=null;pal=0;applyLook()}else save();
+$("exitBox").hidden=true;$("exitAsk").hidden=false;go("setup");toast(wipe?"Tudo apagado deste aparelho":"Você saiu. Seus registros foram mantidos.")}
+$("exitAsk").onclick=()=>{$("exitAsk").hidden=true;$("exitBox").hidden=false};$("exitNo").onclick=()=>{$("exitBox").hidden=true;$("exitAsk").hidden=false};
+$("exitKeep").onclick=()=>doExit(false);$("exitWipe").onclick=()=>{if(confirm("Apagar plano, registros, fotos e favoritos deste aparelho? Isso não pode ser desfeito."))doExit(true)};
+function renderSet(){$("sws").innerHTML=PALS.map((p,i)=>`<button class="sw ${i===pal?"on":""}" data-pal="${i}" title="${p.n}" aria-label="${p.n}" style="background:linear-gradient(135deg,${p.ac} 50%,${p.ro} 50%)"></button>`).join("");$("palName").textContent=PALS[pal].n;$("coverRm").hidden=!cover;$("planInfo").textContent=plan?`Plano atual: ${meals.length} refeições e ${groceries.length} itens de compras. Ao atualizar, seu histórico é mantido.`:""}
+$("sws").onclick=e=>{const b=e.target.closest("[data-pal]");if(!b)return;pal=+b.dataset.pal;try{localStorage.setItem("pal4",PALS[pal].n)}catch{}applyLook();renderSet()};
 $("coverFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=await shrink(f,1000,.7);try{localStorage.setItem("cover3",JSON.stringify(d))}catch{return toast("Foto grande demais para salvar.")}cover=d;applyLook();renderSet();toast("Capa atualizada")}catch{toast("Não foi possível usar essa imagem.")}e.target.value=""};
 $("coverRm").onclick=()=>{cover=null;localStorage.removeItem("cover3");applyLook();renderSet()};
 $("planUpd").onclick=()=>{draft=null;go("setup")};
@@ -267,9 +294,9 @@ $("jsGo").onclick=()=>{try{draft=normalize(parseLoose($("jsText").value));$("jsT
 $("planSample").onclick=()=>{savePlan({meals:SAMPLE_MEALS,groceries:SAMPLE_GROC});go("home")};
 
 /* Início */
-function renderHome(){const h=today.getHours?new Date().getHours():12;$("hHello").textContent=(h<12?"Bom dia":h<18?"Boa tarde":"Boa noite")+" 🌷";$("hDate").textContent=fmt(today);const k=key(today),d=doneN(k);$("hProg").textContent=`${d} de ${meals.length} refeições`;
+function renderHome(){const h=today.getHours?new Date().getHours():12;$("hHello").innerHTML=(h<12?"Bom dia":h<18?"Boa tarde":"Boa noite")+' <svg class="ic"><use href="#i-leaf"/></svg>';$("hDate").textContent=fmt(today);const k=key(today),d=doneN(k);$("hProg").textContent=`${d} de ${meals.length} refeições`;
 $("petals").innerHTML=meals.map(m=>`<button class="petal ${getM(m.id,k).done?"d":""}" data-today="${m.id}" aria-label="${m.title}">${m.emoji}<small>${m.time}</small></button>`).join("");
-const pend=groceries.length+shop.custom.length-Object.values(shop.checked).filter(Boolean).length;$("hShop").textContent=pend>0?`${pend} itens na lista`:"Lista completa";$("hFav").textContent=fav.length?`${fav.length} guardadas`:"Suas opções preferidas";
+shop.hidden=shop.hidden||[];const pend=groceries.filter(g=>!shop.hidden.includes(g[0])).length+shop.custom.length-Object.values(shop.checked).filter(Boolean).length;$("hShop").textContent=pend>0?pend===1?"1 item na lista":`${pend} itens na lista`:"Lista completa";$("hFav").textContent=fav.length?`${fav.length} guardadas`:"Suas opções preferidas";
 const st=matchMedia("(display-mode: standalone)").matches||navigator.standalone;$("installCard").hidden=!!st}
 $("petals").onclick=e=>{if(e.target.closest("[data-today]")){sel=new Date(today);go("day")}};
 $("qDiary").onclick=()=>{sel=new Date(today);go("day")};
@@ -310,12 +337,15 @@ $("pM").onclick=()=>{mCur.setMonth(mCur.getMonth()-1);renderCal()};$("nM").oncli
 $("sCat").innerHTML=cats.map((c,i)=>`<option value="${i}">${c}</option>`).join("");
 function topText(){const c=counts(),top=Object.entries(c).sort((a,b)=>b[1]-a[1]).slice(0,5);if(!top.length)return null;return top.map(([f])=>{const[id,i]=f.split(":"),o=mealOf(id)?.options[+i];return o?(o.label+" "+o.items.join(" ")+" "+(mealOf(id).alts||o.alts||[]).join(" ")).toLowerCase():""}).join(" ")}
 function renderShop(){const q=$("sSearch").value.toLowerCase().trim(),tt=topText();$("sNote").textContent=onlyMine?(tt?"Mostrando itens das 5 opções que você mais escolhe.":"Registre algumas refeições para ativar este filtro."):"";
-const all=[...groceries.map(([n,c,k])=>({id:n,n,c,k})),...shop.custom.map((x,i)=>({id:"c:"+x.id,n:x.n,c:x.c,cu:x.id}))];const done=all.filter(x=>shop.checked[x.id]).length;
+shop.hidden=shop.hidden||[];const hid=shop.hidden;$("sRestore").hidden=!hid.length;$("sRestore").textContent=`Restaurar removidos (${hid.length})`;
+const all=[...groceries.filter(g=>!hid.includes(g[0])).map(([n,c,k])=>({id:n,n,c,k})),...shop.custom.map((x,i)=>({id:"c:"+x.id,n:x.n,c:x.c,cu:x.id}))];const done=all.filter(x=>shop.checked[x.id]).length;
 $("sCount").textContent=`${done}/${all.length}`;$("sBar").style.width=(all.length?done/all.length*100:0)+"%";$("sFilter").classList.toggle("on",onlyMine);
 const vis=all.filter(x=>x.n.toLowerCase().includes(q)&&(!onlyMine||!tt||x.cu||x.k.some(k=>tt.includes(k))));
-$("shopList").innerHTML=cats.map((c,ci)=>{const l=vis.filter(x=>x.c===ci);return l.length?`<div class="cat">${c}</div><div class="card" style="margin-top:6px;padding:6px 16px">${l.map(x=>`<label class="it ${shop.checked[x.id]?"c":""}"><input type="checkbox" data-s="${esc(x.id)}" ${shop.checked[x.id]?"checked":""}><span>${esc(x.n)}</span>${x.cu?`<button class="rm" data-rmc="${x.cu}" aria-label="Excluir item">×</button>`:""}</label>`).join("")}</div>`:""}).join("")||'<div class="empty">Nenhum item encontrado.</div>'}
+$("shopList").innerHTML=cats.map((c,ci)=>{const l=vis.filter(x=>x.c===ci);return l.length?`<div class="cat">${c}</div><div class="card" style="margin-top:6px;padding:6px 16px">${l.map(x=>`<label class="it ${shop.checked[x.id]?"c":""}"><input type="checkbox" data-s="${esc(x.id)}" ${shop.checked[x.id]?"checked":""}><span>${esc(x.n)}</span><button class="rm" ${x.cu?`data-rmc="${x.cu}"`:`data-rmb="${esc(x.id)}"`} aria-label="Remover ${esc(x.n)}">×</button></label>`).join("")}</div>`:""}).join("")||'<div class="empty">Nenhum item encontrado.</div>'}
 $("shopList").addEventListener("change",e=>{if(e.target.dataset.s!==undefined){shop.checked[e.target.dataset.s]=e.target.checked;save();renderShop()}});
-$("shopList").addEventListener("click",e=>{const b=e.target.closest("[data-rmc]");if(b){e.preventDefault();shop.custom=shop.custom.filter(x=>String(x.id)!==b.dataset.rmc);save();renderShop()}});
+$("shopList").addEventListener("click",e=>{const b=e.target.closest("[data-rmc]");if(b){e.preventDefault();shop.custom=shop.custom.filter(x=>String(x.id)!==b.dataset.rmc);save();renderShop();return}
+const r=e.target.closest("[data-rmb]");if(r){e.preventDefault();const id=r.dataset.rmb;shop.hidden=[...(shop.hidden||[]),id];delete shop.checked[id];save();renderShop();toast("Item removido da lista")}});
+$("sRestore").onclick=()=>{shop.hidden=[];save();renderShop();toast("Lista base restaurada")};
 $("sSearch").oninput=renderShop;$("sFilter").onclick=()=>{onlyMine=!onlyMine;renderShop()};$("sClear").onclick=()=>{shop.checked={};save();renderShop()};
 function addItem(){const n=$("sNew").value.trim();if(!n)return;shop.custom.push({id:Date.now(),n,c:+$("sCat").value});$("sNew").value="";save();renderShop()}
 $("sAdd").onclick=addItem;$("sNew").onkeydown=e=>{if(e.key==="Enter")addItem()};
