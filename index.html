@@ -272,7 +272,7 @@ const PALS=[
 {n:"Lavanda",bg:"#f8f5fb",ac:"#3f2a63",ro:"#b69ce0",bl:"#ebe3f7",pa:"#f3eefa",li:"#e2d9f0",ink:"#2d2540",mu:"#7c7590"},
 {n:"Rosé",bg:"#fbf6f4",ac:"#5e1f3a",ro:"#d98ca3",bl:"#f7e3e8",pa:"#fdf0f2",li:"#efdde2",ink:"#3a2430",mu:"#8b7580"}];
 const OLDPAL=["Rosé","Lavanda","Sálvia","Pêssego","Oceano"];
-function loadPal(){let n=L("pal4",null);if(n===null){const o=L("pal3",null);n=o===null?"Sálvia":OLDPAL[o]||"Sálvia"}const k=PALS.findIndex(x=>x.n===n);return k<0?0:k}
+function loadPal(){let n=null;try{const r=localStorage.getItem("pal4");if(r!==null){try{n=JSON.parse(r)}catch{n=r}}}catch{}if(n===null){const o=L("pal3",null);n=o===null?"Sálvia":OLDPAL[o]||"Sálvia"}const k=PALS.findIndex(x=>x.n===n);return k<0?0:k}
 let plan=L("plan3",null),pal=loadPal(),cover=L("cover3",null),draft=null;
 let name=L("name4",""),mode=L("mode4","auto"),bkEvery=L("bkEvery4",7),snooze=L("bkSnooze4",0);
 function applyPlan(p){plan=p;meals=p.meals;groceries=p.groceries.map(g=>Array.isArray(g)?g:[g.n,g.c,[String(g.n).toLowerCase().split(/[ (,—-]/)[0]]])}
@@ -293,7 +293,7 @@ $("exitBox").hidden=true;$("exitAsk").hidden=false;go("setup");toast(wipe?"Tudo 
 $("exitAsk").onclick=()=>{$("exitAsk").hidden=true;$("exitBox").hidden=false};$("exitNo").onclick=()=>{$("exitBox").hidden=true;$("exitAsk").hidden=false};
 $("exitKeep").onclick=()=>doExit(false);$("exitWipe").onclick=()=>{if(confirm("Apagar plano, registros, fotos e favoritos deste aparelho? Isso não pode ser desfeito."))doExit(true)};
 function renderSet(){$("nameSet").value=name;$("bkEvery").value=String(bkEvery);document.querySelectorAll("[data-mode]").forEach(b=>b.classList.toggle("on",b.dataset.mode===mode));$("sws").innerHTML=PALS.map((p,i)=>`<button class="sw ${i===pal?"on":""}" data-pal="${i}" title="${p.n}" aria-label="${p.n}" style="background:linear-gradient(135deg,${p.ac} 50%,${p.ro} 50%)"></button>`).join("");$("palName").textContent=PALS[pal].n;$("coverRm").hidden=!cover;$("planInfo").textContent=plan?`Plano atual: ${meals.length} refeições e ${groceries.length} itens de compras. Ao atualizar, seu histórico é mantido.`:""}
-$("sws").onclick=e=>{const b=e.target.closest("[data-pal]");if(!b)return;pal=+b.dataset.pal;try{localStorage.setItem("pal4",PALS[pal].n)}catch{}applyLook();renderSet()};
+$("sws").onclick=e=>{const b=e.target.closest("[data-pal]");if(!b)return;pal=+b.dataset.pal;try{localStorage.setItem("pal4",JSON.stringify(PALS[pal].n))}catch{}applyLook();renderSet()};
 $("coverFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=await shrink(f,1000,.7);try{localStorage.setItem("cover3",JSON.stringify(d))}catch{return toast("Foto grande demais para salvar.")}cover=d;applyLook();renderSet();toast("Capa atualizada")}catch{toast("Não foi possível usar essa imagem.")}e.target.value=""};
 $("coverRm").onclick=()=>{cover=null;localStorage.removeItem("cover3");applyLook();renderSet()};
 $("planUpd").onclick=()=>{draft=null;go("setup")};
