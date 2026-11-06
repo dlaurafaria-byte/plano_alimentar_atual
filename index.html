@@ -28,7 +28,7 @@ h1{font-size:34px;line-height:1.1}h2{font-size:22px;margin:26px 2px 12px}h3{font
 .card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px;margin:12px 0;box-shadow:var(--shadow)}
 .top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:6px}
 .back{border:1px solid var(--line);background:var(--card);border-radius:50%;width:38px;height:38px;font-size:18px;color:var(--accent)}
-.hero{background:var(--accent);color:var(--on);border-radius:28px;padding:22px 20px 20px;margin:16px 0}
+.hero{background:var(--hero-bg,var(--accent));color:var(--hero-fg,var(--on));border-radius:28px;padding:22px 20px 20px;margin:16px 0}
 .hero{background-size:cover;background-position:center}.hero:not(.cv){background-image:url(icons/cover.svg);background-repeat:no-repeat;background-size:auto 125%;background-position:right center}.ic{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.14em}.q span.i .ic{width:24px;height:24px;color:var(--accent)}h1 .ic{width:.72em;height:.72em;color:var(--rose);margin-left:4px;vertical-align:-.02em}.hero.cv{min-height:240px;display:flex;flex-direction:column;justify-content:flex-end}.hero .muted{color:inherit}.sws{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0 4px}.sw{width:46px;height:46px;border-radius:50%;border:3px solid var(--card);box-shadow:0 0 0 1.5px var(--line)}.sw.on{box-shadow:0 0 0 3px var(--accent)}.hero h2{margin:0;font-size:26px}.hero .muted{color:inherit;opacity:.75}
 .petals{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:18px}
 .petal{border:0;background:rgba(255,255,255,.14);border-radius:50% 50% 50% 14px;aspect-ratio:1;display:grid;place-items:center;font-size:20px;position:relative;color:inherit;opacity:.8}
@@ -78,6 +78,14 @@ dialog{border:0;border-radius:22px;padding:14px;max-width:min(92vw,520px);backgr
 .empty{text-align:center;color:var(--muted);padding:26px 10px;font-size:13px}
 .toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--accent);color:var(--on);padding:11px 18px;border-radius:30px;font-weight:600;font-size:13px;z-index:9;opacity:0;pointer-events:none;transition:opacity .25s;max-width:90vw;text-align:center}.toast.on{opacity:1}
 svg text{fill:var(--muted);font-family:var(--sans)}
+.tl{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:4px 14px;box-shadow:var(--shadow)}
+.tr{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);cursor:pointer}.tr:last-child{border:0}
+.tr .em{width:40px;height:40px;font-size:19px;border-radius:14px;flex-shrink:0}.tr .mi{flex:1;min-width:0}.tr h3{font-size:15px}
+.tr h3 .tm{font-family:var(--sans);font-weight:400;margin-left:6px}.tag{margin-left:8px;font-family:var(--sans);font-size:10.5px;font-weight:700;background:var(--accent);color:var(--on);border-radius:20px;padding:2px 8px;vertical-align:middle}
+.tr .ol{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tr .ck{border:1.5px solid var(--rose);background:transparent;color:var(--accent);border-radius:14px;padding:10px 12px;font-weight:700;font-size:12.5px;white-space:nowrap;flex-shrink:0}
+.tr.d .ck{background:var(--rose);border-color:var(--rose);color:#10150f}.tr.d .em{opacity:.7}
+.dk .note{background:color-mix(in srgb,#e8b96a 16%,var(--card));color:#e9d6b0}.dk .hero{border:1px solid color-mix(in srgb,var(--rose) 30%,transparent)}
 @media(max-width:380px){.app{padding:18px 14px 110px}h1{font-size:30px}.nav button{font-size:10px}.nav button span{font-size:18px}.quick{gap:10px}.q{padding:14px}.petals{gap:6px}.petal{font-size:18px}.gal{grid-template-columns:repeat(2,1fr)}}
 @media(min-width:700px){.quick{grid-template-columns:repeat(4,1fr)}.q.big{grid-column:1/-1}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -104,6 +112,9 @@ svg text{fill:var(--muted);font-family:var(--sans)}
     <div style="height:14px"></div>
     <div class="muted" id="hMsg" style="margin-top:6px">Continue registrando no seu ritmo.</div>
   </div>
+  <h2>Refeições de hoje</h2>
+  <div class="tl" id="todayList"></div>
+  <div id="bkRemind"></div>
   <div class="quick">
     <button class="q big" data-go="shop"><span class="i"><svg class="ic"><use href="#i-cart"/></svg></span><div><b>Supermercado</b><span class="muted" id="hShop"></span></div></button>
     <button class="q" id="qDiary"><span class="i"><svg class="ic"><use href="#i-book"/></svg></span><b>Meu diário</b><span class="muted">Registrar refeições</span></button>
@@ -122,6 +133,7 @@ svg text{fill:var(--muted);font-family:var(--sans)}
 <section class="page" id="p-setup">
   <h1 style="margin-top:6px">Vamos montar o seu plano</h1>
   <p class="muted">Peça a uma IA para ler o plano da sua nutricionista (foto, PDF ou texto) e cole o resultado aqui. O app organiza refeições, opções e lista de compras. Você faz isso uma vez e pode atualizar quando quiser.</p>
+  <div class="card"><h3>Como podemos te chamar?</h3><input type="text" id="nameIn" maxlength="30" placeholder="Seu nome (opcional)" aria-label="Seu nome" autocomplete="given-name" style="margin-top:10px"></div>
   <div class="card"><h3>Ler o plano com outra IA</h3><p class="muted" style="margin:6px 0 12px">Copie as instruções, cole em um assistente de IA (como ChatGPT ou Claude) junto com as fotos, o PDF ou o texto do plano e cole aqui a resposta dela.</p><button class="btn ghost" id="jsCopy">Copiar instruções</button><textarea id="jsText" rows="4" placeholder="Cole aqui a resposta da IA" aria-label="Resposta da IA"></textarea><button class="btn" id="jsGo" style="margin-top:10px">Importar resposta</button></div>
   <div id="draftBox"></div>
   <div class="card"><h3>Só quero experimentar</h3><p class="muted" style="margin:6px 0 12px">Carrega um plano de exemplo.</p><button class="btn ghost" id="planSample">Usar plano de exemplo</button></div>
@@ -132,6 +144,9 @@ svg text{fill:var(--muted);font-family:var(--sans)}
   <div class="top"><button class="back" data-go="home" aria-label="Voltar">‹</button><h2 style="margin:0;flex:1;padding-left:6px">Ajustes</h2></div>
   <div class="card"><h3>Cor do app</h3><div class="sws" id="sws"></div><div class="muted" id="palName"></div></div>
   <div class="card"><h3>Foto de capa</h3><p class="muted" style="margin:6px 0 0">Aparece no topo da tela inicial.</p><div class="ma"><label class="pbtn">Escolher foto<input type="file" id="coverFile" accept="image/*"></label><button class="btn ghost sm" id="coverRm">Remover</button></div></div>
+  <div class="card"><h3>Seu nome</h3><input type="text" id="nameSet" maxlength="30" placeholder="Como podemos te chamar?" aria-label="Seu nome" autocomplete="given-name" style="margin-top:10px"></div>
+  <div class="card"><h3>Modo de exibição</h3><div class="seg" id="modeSeg"><button data-mode="auto">Automático</button><button data-mode="light">Claro</button><button data-mode="dark">Escuro</button></div><p class="muted" style="margin:6px 0 0">Automático segue a configuração do seu celular.</p></div>
+  <div class="card"><h3>Lembrete de backup</h3><p class="muted" style="margin:6px 0 0">Um aviso amigável na tela inicial para você salvar seus registros.</p><select id="bkEvery" aria-label="Frequência do lembrete"><option value="7">A cada 7 dias</option><option value="14">A cada 14 dias</option><option value="30">A cada 30 dias</option><option value="0">Desligado</option></select></div>
   <div class="card"><h3>Meu plano</h3><p class="muted" id="planInfo" style="margin:6px 0 12px"></p><button class="btn" id="planUpd">Atualizar meu plano</button></div>
   <div class="card"><h3>Sair</h3><p class="muted" style="margin:6px 0 12px">Volta para a tela de boas-vindas, como no primeiro acesso.</p>
     <button class="btn ghost" id="exitAsk">Sair</button>
@@ -174,6 +189,7 @@ svg text{fill:var(--muted);font-family:var(--sans)}
   </div>
   <div class="card"><div class="row"><input type="text" id="sNew" placeholder="Adicionar item" aria-label="Novo item" style="margin-top:0"><button class="btn" id="sAdd">Adicionar</button></div>
   <div class="row"><select id="sCat" aria-label="Categoria"></select></div></div>
+  <div class="card"><div class="ma" style="margin:0"><button class="btn" id="sCopy">Copiar lista</button><button class="btn ghost" id="sShare">Compartilhar</button></div><div class="muted" style="margin-top:8px">Leva só o que ainda falta comprar, por categoria. Cole onde quiser: WhatsApp, notas, mensagem.</div></div>
   <div id="shopList"></div>
 </section>
 
@@ -258,20 +274,33 @@ const PALS=[
 const OLDPAL=["Rosé","Lavanda","Sálvia","Pêssego","Oceano"];
 function loadPal(){let n=L("pal4",null);if(n===null){const o=L("pal3",null);n=o===null?"Sálvia":OLDPAL[o]||"Sálvia"}const k=PALS.findIndex(x=>x.n===n);return k<0?0:k}
 let plan=L("plan3",null),pal=loadPal(),cover=L("cover3",null),draft=null;
+let name=L("name4",""),mode=L("mode4","auto"),bkEvery=L("bkEvery4",7),snooze=L("bkSnooze4",0);
 function applyPlan(p){plan=p;meals=p.meals;groceries=p.groceries.map(g=>Array.isArray(g)?g:[g.n,g.c,[String(g.n).toLowerCase().split(/[ (,—-]/)[0]]])}
 function savePlan(p){applyPlan(p);try{localStorage.setItem("plan3",JSON.stringify(p))}catch{toast("Não foi possível salvar o plano.")}}
 if(plan)applyPlan(plan);
-function applyLook(){const p=PALS[pal]||PALS[0],r=document.documentElement.style;[["--bg","bg"],["--accent","ac"],["--rose","ro"],["--blush","bl"],["--pale","pa"],["--line","li"],["--ink","ink"],["--muted","mu"]].forEach(([v,k])=>r.setProperty(v,p[k]));document.querySelector("meta[name=theme-color]").content=p.ac;const h=document.querySelector(".hero");h.classList.toggle("cv",!!cover);h.style.backgroundImage=cover?`linear-gradient(rgba(10,10,10,.15),rgba(10,10,10,.65)),url(${cover})`:""}
+const mq=matchMedia("(prefers-color-scheme: dark)");
+function isDark(){return mode==="dark"||(mode==="auto"&&mq.matches)}
+function applyLook(){const p=PALS[pal]||PALS[0],R=document.documentElement,r=R.style,dk=isDark();
+["--bg","--accent","--rose","--blush","--pale","--line","--ink","--muted","--card","--on","--shadow","--hero-bg","--hero-fg"].forEach(v=>r.removeProperty(v));
+if(dk){const c=(a,b)=>`color-mix(in srgb,${p.ac} ${a}%,${b})`;[["--bg",c(16,"#0d100e")],["--card",c(24,"#141816")],["--pale",c(30,"#141816")],["--blush",c(40,"#141816")],["--line",c(46,"#1b1f1d")],["--ink","#eef3ef"],["--muted","#a9b5ad"],["--rose",p.ro],["--accent",`color-mix(in srgb,${p.ro} 80%,#fff)`],["--on","#0f1511"],["--shadow","0 6px 22px rgba(0,0,0,.35)"],["--hero-bg",p.ac],["--hero-fg","#fff"]].forEach(([v,x])=>r.setProperty(v,x))}
+else[["--bg","bg"],["--accent","ac"],["--rose","ro"],["--blush","bl"],["--pale","pa"],["--line","li"],["--ink","ink"],["--muted","mu"]].forEach(([v,k])=>r.setProperty(v,p[k]));
+R.classList.toggle("dk",dk);r.colorScheme=dk?"dark":"light";document.querySelector("meta[name=theme-color]").content=dk?"#101412":p.ac;
+const h=document.querySelector(".hero");h.classList.toggle("cv",!!cover);h.style.backgroundImage=cover?`linear-gradient(rgba(10,10,10,.15),rgba(10,10,10,.65)),url(${cover})`:""}
+mq.addEventListener?.("change",()=>{if(mode==="auto")applyLook()});
 function doExit(wipe){["plan3"].forEach(k=>localStorage.removeItem(k));plan=null;meals=[];groceries=[];draft=null;shop.checked={};shop.hidden=[];
-if(wipe){["mealDiary","mealFav3","shop3","lastBackup3","cover3","pal3","pal4"].forEach(k=>localStorage.removeItem(k));records={};fav=[];shop={checked:{},custom:[],hidden:[]};lastBk=null;cover=null;pal=0;applyLook()}else save();
+if(wipe){["mealDiary","mealFav3","shop3","lastBackup3","cover3","pal3","pal4","name4","mode4","bkEvery4","bkSnooze4"].forEach(k=>localStorage.removeItem(k));records={};fav=[];shop={checked:{},custom:[],hidden:[]};lastBk=null;cover=null;pal=0;name="";mode="auto";bkEvery=7;snooze=0;applyLook()}else save();
 $("exitBox").hidden=true;$("exitAsk").hidden=false;go("setup");toast(wipe?"Tudo apagado deste aparelho":"Você saiu. Seus registros foram mantidos.")}
 $("exitAsk").onclick=()=>{$("exitAsk").hidden=true;$("exitBox").hidden=false};$("exitNo").onclick=()=>{$("exitBox").hidden=true;$("exitAsk").hidden=false};
 $("exitKeep").onclick=()=>doExit(false);$("exitWipe").onclick=()=>{if(confirm("Apagar plano, registros, fotos e favoritos deste aparelho? Isso não pode ser desfeito."))doExit(true)};
-function renderSet(){$("sws").innerHTML=PALS.map((p,i)=>`<button class="sw ${i===pal?"on":""}" data-pal="${i}" title="${p.n}" aria-label="${p.n}" style="background:linear-gradient(135deg,${p.ac} 50%,${p.ro} 50%)"></button>`).join("");$("palName").textContent=PALS[pal].n;$("coverRm").hidden=!cover;$("planInfo").textContent=plan?`Plano atual: ${meals.length} refeições e ${groceries.length} itens de compras. Ao atualizar, seu histórico é mantido.`:""}
+function renderSet(){$("nameSet").value=name;$("bkEvery").value=String(bkEvery);document.querySelectorAll("[data-mode]").forEach(b=>b.classList.toggle("on",b.dataset.mode===mode));$("sws").innerHTML=PALS.map((p,i)=>`<button class="sw ${i===pal?"on":""}" data-pal="${i}" title="${p.n}" aria-label="${p.n}" style="background:linear-gradient(135deg,${p.ac} 50%,${p.ro} 50%)"></button>`).join("");$("palName").textContent=PALS[pal].n;$("coverRm").hidden=!cover;$("planInfo").textContent=plan?`Plano atual: ${meals.length} refeições e ${groceries.length} itens de compras. Ao atualizar, seu histórico é mantido.`:""}
 $("sws").onclick=e=>{const b=e.target.closest("[data-pal]");if(!b)return;pal=+b.dataset.pal;try{localStorage.setItem("pal4",PALS[pal].n)}catch{}applyLook();renderSet()};
 $("coverFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=await shrink(f,1000,.7);try{localStorage.setItem("cover3",JSON.stringify(d))}catch{return toast("Foto grande demais para salvar.")}cover=d;applyLook();renderSet();toast("Capa atualizada")}catch{toast("Não foi possível usar essa imagem.")}e.target.value=""};
 $("coverRm").onclick=()=>{cover=null;localStorage.removeItem("cover3");applyLook();renderSet()};
 $("planUpd").onclick=()=>{draft=null;go("setup")};
+const store=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{}};
+["nameIn","nameSet"].forEach(id=>$(id).oninput=e=>{name=e.target.value.trim().slice(0,30);store("name4",name)});
+$("modeSeg").onclick=e=>{const b=e.target.closest("[data-mode]");if(!b)return;mode=b.dataset.mode;store("mode4",mode);applyLook();renderSet()};
+$("bkEvery").onchange=e=>{bkEvery=+e.target.value;store("bkEvery4",bkEvery);toast(bkEvery?`Lembrete a cada ${bkEvery} dias`:"Lembrete desligado")};
 const PROMPT=`Você lê planos alimentares e devolve APENAS JSON válido, sem texto extra, neste formato: {"meals":[{"time":"HH:MM","title":"Café da manhã","emoji":"🍳","options":[{"label":"nome curto da opção","items":["alimento — porção"],"alts":["alternativa"],"recipe":"modo de preparo"}]}],"groceries":[{"n":"item","c":0}]}. Regras: uma entrada em meals por refeição do dia, na ordem do plano. Cada opção ou substituição do plano vira um item de options, com items escritos como no plano, incluindo porções. Use alts só para alternativas listadas (como frutas) e recipe só se o plano trouxer modo de preparo. groceries é a lista de compras do plano; se não houver, deduza dos alimentos do plano. c é a categoria: 0 Frutas, 1 Verduras e legumes, 2 Proteínas, 3 Grãos e massas, 4 Laticínios, 5 Outros. Não invente alimentos que não estejam no plano. Escreva em português.`;
 const _g=(o,...k)=>{for(const x of k)if(o&&o[x]!==undefined&&o[x]!==null)return o[x]};
 const _list=v=>Array.isArray(v)?v.map(i=>typeof i==="object"&&i?Object.values(i).filter(x=>typeof x!=="object").join(" — "):String(i)).filter(Boolean):typeof v==="string"?v.split(/\n|;/).map(x=>x.trim()).filter(Boolean):[];
@@ -283,7 +312,7 @@ const gr=_g(o,"groceries","compras","lista_compras","lista_de_compras","lista","
 const gs=(Array.isArray(gr)?gr:_list(gr)).map(g=>{if(typeof g==="string")return{n:g,c:5};let c=_g(g,"c","categoria","category");if(typeof c==="string"){const k=cats.findIndex(x=>x.toLowerCase().startsWith(c.toLowerCase().slice(0,4)));c=k<0?5:k}return{n:String(_g(g,"n","nome","item","name")||""),c:Math.min(5,Math.max(0,+c||0))}}).filter(g=>g.n);
 return{meals:ms,groceries:gs}}
 function parseLoose(s){s=String(s);const a=s.search(/[\[{]/),b=Math.max(s.lastIndexOf("}"),s.lastIndexOf("]"));if(a<0||b<a)throw{code:"nojson"};const x=s.slice(a,b+1);try{return JSON.parse(x)}catch{}try{return JSON.parse(x.replace(/[“”„]/g,'"').replace(/[‘’]/g,"'").replace(/,\s*([}\]])/g,"$1"))}catch{throw{code:"badjson"}}}
-function renderSetup(){$("setupBack").hidden=!plan;$("draftBox").innerHTML=draft?`<div class="card"><h3>Confira o seu plano</h3><p class="muted" style="margin:6px 0 10px">${draft.meals.length} refeições e ${draft.groceries.length} itens de compras. Toque em uma refeição para ver as opções. Se faltar algo, adicione abaixo.</p>${draft.meals.map((m,i)=>`<details><summary>${m.emoji} ${esc(m.time)} ${esc(m.title)} · ${m.options.length} opções</summary><ul>${m.options.map(o=>`<li>${esc(o.label)}</li>`).join("")}</ul><button class="btn ghost sm" data-rmmeal="${i}">Remover refeição</button></details>`).join("")}
+function renderSetup(){$("nameIn").value=name;$("setupBack").hidden=!plan;$("draftBox").innerHTML=draft?`<div class="card"><h3>Confira o seu plano</h3><p class="muted" style="margin:6px 0 10px">${draft.meals.length} refeições e ${draft.groceries.length} itens de compras. Toque em uma refeição para ver as opções. Se faltar algo, adicione abaixo.</p>${draft.meals.map((m,i)=>`<details><summary>${m.emoji} ${esc(m.time)} ${esc(m.title)} · ${m.options.length} opções</summary><ul>${m.options.map(o=>`<li>${esc(o.label)}</li>`).join("")}</ul><button class="btn ghost sm" data-rmmeal="${i}">Remover refeição</button></details>`).join("")}
 <details><summary>＋ Adicionar uma refeição que faltou</summary><input type="text" id="addT" placeholder="Nome (ex.: Ceia)" aria-label="Nome da refeição"><input type="text" id="addH" placeholder="Horário (ex.: 22:00)" aria-label="Horário"><textarea id="addI" rows="3" placeholder="Alimentos, um por linha" aria-label="Alimentos"></textarea><button class="btn sm" data-act="add" style="margin-top:8px">Adicionar</button></details>
 <div class="ma"><button class="btn" data-act="use">Usar este plano</button><button class="btn ghost" data-act="drop">Descartar</button></div></div>`:""}
 $("draftBox").onclick=e=>{const b=e.target.closest("button");if(!b)return;const a=b.dataset.act;if(a==="use"){savePlan(draft);draft=null;go("home");toast("Plano atualizado")}if(a==="drop"){draft=null;renderSetup()}
@@ -294,12 +323,24 @@ $("jsGo").onclick=()=>{try{draft=normalize(parseLoose($("jsText").value));$("jsT
 $("planSample").onclick=()=>{savePlan({meals:SAMPLE_MEALS,groceries:SAMPLE_GROC});go("home")};
 
 /* Início */
-function renderHome(){const h=today.getHours?new Date().getHours():12;$("hHello").innerHTML=(h<12?"Bom dia":h<18?"Boa tarde":"Boa noite")+' <svg class="ic"><use href="#i-leaf"/></svg>';$("hDate").textContent=fmt(today);const k=key(today),d=doneN(k);$("hProg").textContent=`${d} de ${meals.length} refeições`;
+function renderHome(){const h=today.getHours?new Date().getHours():12;$("hHello").innerHTML=(h<12?"Bom dia":h<18?"Boa tarde":"Boa noite")+(name?", "+esc(name):"")+' <svg class="ic"><use href="#i-leaf"/></svg>';$("hDate").textContent=fmt(today);const k=key(today),d=doneN(k);$("hProg").textContent=`${d} de ${meals.length} refeições`;
 $("petals").innerHTML=meals.map(m=>`<button class="petal ${getM(m.id,k).done?"d":""}" data-today="${m.id}" aria-label="${m.title}">${m.emoji}<small>${m.time}</small></button>`).join("");
 shop.hidden=shop.hidden||[];const pend=groceries.filter(g=>!shop.hidden.includes(g[0])).length+shop.custom.length-Object.values(shop.checked).filter(Boolean).length;$("hShop").textContent=pend>0?pend===1?"1 item na lista":`${pend} itens na lista`:"Lista completa";$("hFav").textContent=fav.length?`${fav.length} guardadas`:"Suas opções preferidas";
-const st=matchMedia("(display-mode: standalone)").matches||navigator.standalone;$("installCard").hidden=!!st}
+const st=matchMedia("(display-mode: standalone)").matches||navigator.standalone;$("installCard").hidden=!!st;renderToday();renderRemind()}
 $("petals").onclick=e=>{if(e.target.closest("[data-today]")){sel=new Date(today);go("day")}};
 $("qDiary").onclick=()=>{sel=new Date(today);go("day")};
+
+function toMin(s){const m=/(\d{1,2}):(\d{2})/.exec(s||"");return m?+m[1]*60+ +m[2]:null}
+function renderToday(){const k=key(today),now=new Date(),nm=now.getHours()*60+now.getMinutes();let nx=null;
+for(const m of meals){if(getM(m.id,k).done)continue;const t=toMin(m.time);if(t===null||t>=nm-60){nx=m.id;break}}
+if(nx===null){const f=meals.find(m=>!getM(m.id,k).done);nx=f?f.id:null}
+$("todayList").innerHTML=meals.map(m=>{const v=getM(m.id,k),o=m.options[optIdx(v)]||m.options[0];return `<div class="tr ${v.done?"d":""}" data-open="${m.id}"><div class="em">${m.emoji}</div><div class="mi"><h3>${esc(m.title)}<span class="tm">${esc(m.time)}</span>${m.id===nx?'<span class="tag">Próxima</span>':""}</h3><div class="ol">${esc(o.label)}</div></div><button class="ck" data-q="${m.id}" aria-pressed="${!!v.done}">${v.done?"✓ Comi":"Comi isso"}</button></div>`}).join("")}
+$("todayList").onclick=e=>{const b=e.target.closest("[data-q]");if(b){const id=b.dataset.q,k=key(today),r=records[k]||(records[k]={meals:{}}),cur=r.meals[id]||{},nv=!cur.done;r.meals[id]={...cur,done:nv};save();renderHome();toast(nv?"Registrado: "+mealOf(id).title:"Registro desfeito");return}
+if(e.target.closest("[data-open]")){sel=new Date(today);go("day")}};
+function renderRemind(){const box=$("bkRemind");box.innerHTML="";if(!bkEvery||Date.now()<snooze)return;const ks=Object.keys(records).filter(hasRec).sort();if(!ks.length)return;
+const ref=lastBk||parse(ks[0]).getTime(),since=Math.floor((Date.now()-ref)/864e5);if(since<bkEvery)return;
+box.innerHTML=`<div class="card"><h3>Que tal guardar um backup?</h3><p class="muted" style="margin:6px 0 12px">${lastBk?`Faz ${since} dias que você não salva.`:"Você ainda não salvou nenhum backup."} Assim seu histórico fica seguro se você trocar de celular.</p><div class="ma"><button class="btn sm" data-bk="go">Fazer backup</button><button class="btn ghost sm" data-bk="later">Lembrar depois</button></div></div>`}
+$("bkRemind").onclick=e=>{const b=e.target.closest("[data-bk]");if(!b)return;if(b.dataset.bk==="go"){go("hist");document.querySelector('[data-tab="backup"]').click()}else{snooze=Date.now()+2*864e5;store("bkSnooze4",snooze);renderRemind()}};
 
 /* Diário */
 function details(o){let s=`<h4>Itens desta opção</h4><ul>${o.items.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`;if(o.alts)s+=`<h4>Alternativas do plano</h4><ul>${o.alts.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`;if(o.recipe)s+=`<h4>Modo de preparo</h4><p>${esc(o.recipe)}</p>`;if(o.note)s+=`<div class="note">${esc(o.note)}</div>`;return s}
@@ -348,7 +389,13 @@ const r=e.target.closest("[data-rmb]");if(r){e.preventDefault();const id=r.datas
 $("sRestore").onclick=()=>{shop.hidden=[];save();renderShop();toast("Lista base restaurada")};
 $("sSearch").oninput=renderShop;$("sFilter").onclick=()=>{onlyMine=!onlyMine;renderShop()};$("sClear").onclick=()=>{shop.checked={};save();renderShop()};
 function addItem(){const n=$("sNew").value.trim();if(!n)return;shop.custom.push({id:Date.now(),n,c:+$("sCat").value});$("sNew").value="";save();renderShop()}
-$("sAdd").onclick=addItem;$("sNew").onkeydown=e=>{if(e.key==="Enter")addItem()};
+$("sAdd").onclick=addItem;
+function shopText(){shop.hidden=shop.hidden||[];const hid=shop.hidden;const all=[...groceries.filter(g=>!hid.includes(g[0])).map(([n,c])=>({id:n,n,c})),...shop.custom.map(x=>({id:"c:"+x.id,n:x.n,c:x.c}))].filter(x=>!shop.checked[x.id]);if(!all.length)return"";
+return"Lista de compras\n\n"+cats.map((c,ci)=>{const l=all.filter(x=>x.c===ci);return l.length?c+"\n"+l.map(x=>"- "+x.n).join("\n"):""}).filter(Boolean).join("\n\n")}
+async function copyText(t){try{await navigator.clipboard.writeText(t);return true}catch{try{const a=document.createElement("textarea");a.value=t;a.style.cssText="position:fixed;opacity:0";document.body.appendChild(a);a.select();const ok=document.execCommand("copy");a.remove();return ok}catch{return false}}}
+$("sCopy").onclick=async()=>{const t=shopText();if(!t)return toast("Não há itens pendentes para copiar.");toast(await copyText(t)?"Lista copiada. É só colar onde quiser.":"Não foi possível copiar neste aparelho.")};
+$("sShare").onclick=async()=>{const t=shopText();if(!t)return toast("Não há itens pendentes para compartilhar.");if(navigator.share){try{await navigator.share({title:"Lista de compras",text:t});return}catch(e){if(e.name==="AbortError")return}}toast(await copyText(t)?"Compartilhar não está disponível aqui. A lista foi copiada.":"Não foi possível copiar neste aparelho.")};
+$("sNew").onkeydown=e=>{if(e.key==="Enter")addItem()};
 
 /* Histórico */
 function renderHist(){const t=document.querySelector("[data-tab].on").dataset.tab;["charts","gallery","backup"].forEach(x=>$("t-"+x).hidden=x!==t);({charts:renderCharts,gallery:renderGallery,backup:renderBackup})[t]()}
