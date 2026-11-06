@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5e1f3a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Meu plano">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<title>Meu plano alimentar</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Figtree:wght@400;600;700&display=swap">
+<style>
+:root{--bg:#fbf6f4;--card:#fff;--ink:#3a2430;--muted:#8b7580;--rose:#d98ca3;--blush:#f7e3e8;--pale:#fdf0f2;--accent:#5e1f3a;--on:#fff;--line:#efdde2;--shadow:0 6px 22px rgba(94,31,58,.07);--serif:Fraunces,Georgia,"Times New Roman",serif;--sans:Figtree,-apple-system,"Segoe UI",sans-serif;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*:before,*:after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.5;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.app{max-width:760px;margin:auto;padding:22px 18px 110px}
+.page{display:none}.page.on{display:block}
+h1,h2,h3{font-family:var(--serif);font-weight:600;margin:0;letter-spacing:-.01em}
+h1{font-size:34px;line-height:1.1}h2{font-size:22px;margin:26px 2px 12px}h3{font-size:17px}
+.muted{color:var(--muted);font-size:12.5px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px;margin:12px 0;box-shadow:var(--shadow)}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:6px}
+.back{border:1px solid var(--line);background:var(--card);border-radius:50%;width:38px;height:38px;font-size:18px;color:var(--accent)}
+.hero{background:var(--accent);color:var(--on);border-radius:28px;padding:22px 20px 20px;margin:16px 0}
+.hero{background-size:cover;background-position:center}.hero.cv{min-height:240px;display:flex;flex-direction:column;justify-content:flex-end}.hero .muted{color:inherit}.sws{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0 4px}.sw{width:46px;height:46px;border-radius:50%;border:3px solid var(--card);box-shadow:0 0 0 1.5px var(--line)}.sw.on{box-shadow:0 0 0 3px var(--accent)}.hero h2{margin:0;font-size:26px}.hero .muted{color:inherit;opacity:.75}
+.petals{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:18px}
+.petal{border:0;background:rgba(255,255,255,.14);border-radius:50% 50% 50% 14px;aspect-ratio:1;display:grid;place-items:center;font-size:20px;position:relative;color:inherit;opacity:.8}
+.petal.d{background:var(--rose);opacity:1;border-radius:50% 14px 50% 50%}
+.petal small{position:absolute;bottom:-17px;font-size:10px;opacity:.8}
+.quick{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.q{border:1px solid var(--line);background:var(--card);border-radius:20px;padding:16px;text-align:left;box-shadow:var(--shadow)}
+.q b{display:block;font-family:var(--serif);font-size:16px;margin:8px 0 2px}.q span.i{font-size:22px}
+.q.big{grid-column:1/-1;background:var(--blush);display:flex;align-items:center;gap:14px}.q.big b{margin:0}
+.btn{border:0;border-radius:14px;background:var(--accent);color:var(--on);font-weight:700;padding:12px 16px}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--accent)}
+.btn.sm{padding:8px 12px;font-size:12.5px;border-radius:11px}
+.bar{height:8px;background:var(--blush);border-radius:20px;overflow:hidden;margin:10px 0 6px}.bar i{display:block;height:100%;background:var(--rose);border-radius:20px;width:0;transition:width .3s}
+.nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:6px 8px;padding-bottom:calc(6px + env(safe-area-inset-bottom,0px));z-index:5}
+.nav div{max-width:760px;margin:auto;display:grid;grid-template-columns:repeat(5,1fr);gap:2px}
+.nav button{border:0;background:none;color:var(--muted);padding:7px 2px;border-radius:14px;font-size:11px;font-weight:600}
+.nav button span{display:block;font-size:19px;line-height:1.2}.nav button.on{color:var(--accent);background:var(--blush)}
+.daynav{display:flex;align-items:center;justify-content:space-between;gap:10px}.daynav b{font-family:var(--serif);font-size:19px;text-transform:capitalize;text-align:center}
+.meal{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:16px;margin:14px 0;box-shadow:var(--shadow)}
+.meal.done{border-color:var(--rose)}
+.mh{display:flex;align-items:center;gap:12px}.em{width:44px;height:44px;border-radius:15px;background:var(--pale);display:grid;place-items:center;font-size:22px}.mi{flex:1;min-width:0}.tm{font-size:12px;color:var(--muted)}
+.heart{border:1px solid var(--line);background:var(--card);border-radius:12px;width:40px;height:40px;font-size:18px;color:var(--muted)}.heart.on{background:var(--blush);color:var(--accent);border-color:var(--rose)}
+select,input[type=text],input[type=search],textarea{width:100%;border:1px solid var(--line);border-radius:13px;padding:12px;background:var(--card);font:inherit;font-size:14px;color:var(--ink);margin-top:12px}
+textarea{resize:vertical;min-height:58px}
+details{margin-top:10px;background:var(--pale);border-radius:14px;padding:11px 13px;font-size:13px}summary{cursor:pointer;font-weight:600;color:var(--accent)}
+details h4{font-size:12px;color:var(--accent);margin:12px 0 4px}details ul{padding-left:18px;margin:4px 0}details p{margin:4px 0}
+.note{background:#fff4e8;color:#80664b;border-radius:12px;padding:10px;font-size:12px;margin-top:8px}
+.ma{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}.tog{flex:1;min-width:150px;border:1.5px solid var(--rose);background:transparent;border-radius:14px;padding:11px;font-weight:700;color:var(--accent)}.tog.on{background:var(--rose);color:#3a1226}
+.pbtn{border:1.5px dashed var(--rose);border-radius:14px;padding:11px 14px;font-weight:700;color:var(--accent);cursor:pointer}.pbtn input{display:none}
+.ph{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.ph .w{position:relative}.ph img{width:84px;height:84px;object-fit:cover;border-radius:14px;border:1px solid var(--line);display:block}.ph .x{position:absolute;right:-6px;top:-6px;border:0;background:var(--accent);color:var(--on);width:22px;height:22px;border-radius:50%;font-size:13px}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;text-align:center}.cal .h{font-size:11px;color:var(--muted);padding:4px 0}
+.dy{border:0;background:var(--pale);border-radius:12px;min-height:44px;position:relative;font-size:13px;color:var(--ink)}.dy.m{opacity:.3}.dy.s{background:var(--accent);color:var(--on);font-weight:700}.dy.t:not(.s){outline:1.5px solid var(--rose)}
+.dy i{position:absolute;bottom:5px;left:calc(50% - 2px);width:4px;height:4px;border-radius:50%;background:var(--rose)}.dy.s i{background:var(--on)}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);background:var(--blush);border-radius:16px;padding:4px;gap:4px;margin:6px 0 4px}.seg.two{grid-template-columns:1fr 1fr;max-width:240px}
+.seg button{border:0;background:transparent;border-radius:12px;padding:9px;font-weight:700;color:var(--muted)}.seg button.on{background:var(--card);color:var(--accent);box-shadow:var(--shadow)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}.stat{background:var(--pale);border-radius:16px;padding:12px}.stat b{font-family:var(--serif);font-size:24px;color:var(--accent);display:block}
+.rk{margin:11px 0}.rk div:first-child{display:flex;justify-content:space-between;gap:10px;font-size:13px}.rk .bar{height:7px;margin:5px 0 0}
+.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.gal button{border:0;padding:0;background:none;position:relative;border-radius:14px;overflow:hidden;aspect-ratio:1}.gal img{width:100%;height:100%;object-fit:cover;display:block}.gal span{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,rgba(58,20,38,.75));color:#fff;font-size:11px;padding:14px 6px 5px;text-align:left}
+.gh{font-family:var(--serif);font-size:16px;margin:20px 2px 8px;text-transform:capitalize}
+dialog{border:0;border-radius:22px;padding:14px;max-width:min(92vw,520px);background:var(--card);color:var(--ink)}dialog::backdrop{background:rgba(40,12,26,.6)}dialog img{width:100%;max-height:62vh;object-fit:contain;border-radius:14px}
+.cat{font-family:var(--serif);font-size:16px;margin:20px 2px 4px}
+.it{display:flex;align-items:center;gap:14px;padding:13px 4px;border-bottom:1px solid var(--line);font-size:15px;cursor:pointer}.it:last-child{border:0}
+.it input{appearance:none;width:26px;height:26px;border:2px solid var(--rose);border-radius:9px;flex-shrink:0;margin:0;display:grid;place-items:center;cursor:pointer}.it input:checked{background:var(--rose)}.it input:checked:after{content:"✓";color:#3a1226;font-weight:700}
+.it.c span{text-decoration:line-through;color:var(--muted)}.it span{flex:1}.it .rm{border:0;background:none;color:var(--muted);font-size:18px}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:30px;padding:9px 14px;font-weight:600;font-size:13px;color:var(--muted)}.chip.on{background:var(--accent);color:var(--on);border-color:var(--accent)}
+.row{display:flex;gap:8px;align-items:center}.row select{margin-top:12px;width:auto}
+.empty{text-align:center;color:var(--muted);padding:26px 10px;font-size:13px}
+.toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--accent);color:var(--on);padding:11px 18px;border-radius:30px;font-weight:600;font-size:13px;z-index:9;opacity:0;pointer-events:none;transition:opacity .25s;max-width:90vw;text-align:center}.toast.on{opacity:1}
+svg text{fill:var(--muted);font-family:var(--sans)}
+@media(max-width:380px){.app{padding:18px 14px 110px}h1{font-size:30px}.nav button{font-size:10px}.nav button span{font-size:18px}.quick{gap:10px}.q{padding:14px}.petals{gap:6px}.petal{font-size:18px}.gal{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:700px){.quick{grid-template-columns:repeat(4,1fr)}.q.big{grid-column:1/-1}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main class="app">
+
+<section class="page on" id="p-home">
+  <div class="top"><div><div class="muted" id="hDate"></div><h1 id="hHello"></h1></div><button class="back" data-go="set" aria-label="Ajustes">⚙</button></div>
+  <div class="hero">
+    <div class="muted">Seu dia até agora</div>
+    <h2 id="hProg"></h2>
+    <div class="petals" id="petals"></div>
+    <div style="height:14px"></div>
+    <div class="muted" id="hMsg" style="margin-top:6px">Continue registrando no seu ritmo.</div>
+  </div>
+  <div class="quick">
+    <button class="q big" data-go="shop"><span class="i">🛒</span><div><b>Supermercado</b><span class="muted" id="hShop"></span></div></button>
+    <button class="q" id="qDiary"><span class="i">🌷</span><b>Meu diário</b><span class="muted">Registrar refeições</span></button>
+    <button class="q" data-go="cal"><span class="i">📅</span><b>Calendário</b><span class="muted">Ver dias anteriores</span></button>
+    <button class="q" data-go="favs"><span class="i">♡</span><b>Favoritos</b><span class="muted" id="hFav"></span></button>
+    <button class="q" data-go="hist"><span class="i">✿</span><b>Meu histórico</b><span class="muted">Hábitos e fotos</span></button>
+  </div>
+  <div class="card" id="installCard">
+    <h3>Instalar no celular</h3>
+    <p class="muted" style="margin:6px 0 12px">Deixe o app na tela inicial, com ícone próprio.</p>
+    <button class="btn" id="installBtn">Instalar app</button>
+    <details id="installHelp"><summary>Como instalar manualmente</summary><p><b>iPhone (Safari):</b> toque em Compartilhar e depois em Adicionar à Tela de Início.</p><p><b>Android (Chrome):</b> abra o menu ⋮ e toque em Instalar app ou Adicionar à tela inicial.</p></details>
+  </div>
+</section>
+
+<section class="page" id="p-setup">
+  <h1 style="margin-top:6px">Vamos montar o seu plano</h1>
+  <p class="muted">Peça a uma IA para ler o plano da sua nutricionista (foto, PDF ou texto) e cole o resultado aqui. O app organiza refeições, opções e lista de compras. Você faz isso uma vez e pode atualizar quando quiser.</p>
+  <div class="card"><h3>Ler o plano com outra IA</h3><p class="muted" style="margin:6px 0 12px">Copie as instruções, cole em um assistente de IA (como ChatGPT ou Claude) junto com as fotos, o PDF ou o texto do plano e cole aqui a resposta dela.</p><button class="btn ghost" id="jsCopy">Copiar instruções</button><textarea id="jsText" rows="4" placeholder="Cole aqui a resposta da IA" aria-label="Resposta da IA"></textarea><button class="btn" id="jsGo" style="margin-top:10px">Importar resposta</button></div>
+  <div id="draftBox"></div>
+  <div class="card"><h3>Só quero experimentar</h3><p class="muted" style="margin:6px 0 12px">Carrega um plano de exemplo.</p><button class="btn ghost" id="planSample">Usar plano de exemplo</button></div>
+  <button class="btn ghost" id="setupBack" data-go="set">Cancelar</button>
+</section>
+
+<section class="page" id="p-set">
+  <div class="top"><button class="back" data-go="home" aria-label="Voltar">‹</button><h2 style="margin:0;flex:1;padding-left:6px">Ajustes</h2></div>
+  <div class="card"><h3>Cor do app</h3><div class="sws" id="sws"></div><div class="muted" id="palName"></div></div>
+  <div class="card"><h3>Foto de capa</h3><p class="muted" style="margin:6px 0 0">Aparece no topo da tela inicial.</p><div class="ma"><label class="pbtn">Escolher foto<input type="file" id="coverFile" accept="image/*"></label><button class="btn ghost sm" id="coverRm">Remover</button></div></div>
+  <div class="card"><h3>Meu plano</h3><p class="muted" id="planInfo" style="margin:6px 0 12px"></p><button class="btn" id="planUpd">Atualizar meu plano</button></div>
+</section>
+
+<section class="page" id="p-day">
+  <div class="top"><button class="back" data-go="home" aria-label="Voltar">‹</button><h2 style="margin:0;flex:1;padding-left:6px">Meu diário</h2></div>
+  <div class="card"><div class="daynav"><button class="back" id="prevD" aria-label="Dia anterior">‹</button><b id="dLabel"></b><button class="back" id="nextD" aria-label="Próximo dia">›</button></div>
+  <div class="bar"><i id="dBar"></i></div><div class="muted" id="dTxt"></div></div>
+  <div id="dayMeals"></div>
+</section>
+
+<section class="page" id="p-favs">
+  <h2 style="margin-top:6px">Suas favoritas</h2>
+  <p class="muted" style="margin:0 2px">Toque no coração de uma opção no diário para guardá-la aqui.</p>
+  <div id="favList"></div>
+</section>
+
+<section class="page" id="p-cal">
+  <h2 style="margin-top:6px">Calendário</h2>
+  <div class="card">
+    <div class="daynav" style="margin-bottom:12px"><button class="back" id="pM" aria-label="Mês anterior">‹</button><b id="mLabel"></b><button class="back" id="nM" aria-label="Próximo mês">›</button></div>
+    <div class="cal"><span class="h">dom</span><span class="h">seg</span><span class="h">ter</span><span class="h">qua</span><span class="h">qui</span><span class="h">sex</span><span class="h">sáb</span></div>
+    <div class="cal" id="calDays" style="margin-top:4px"></div>
+    <p class="muted" style="margin:12px 0 0">Dias com pontinho têm registros. Toque em uma data para abrir o diário.</p>
+  </div>
+  <button class="btn ghost" id="goToday">Voltar para hoje</button>
+</section>
+
+<section class="page" id="p-shop">
+  <h2 style="margin-top:6px">Supermercado</h2>
+  <div class="card">
+    <div class="row" style="justify-content:space-between"><b>Progresso das compras</b><span class="muted" id="sCount"></span></div>
+    <div class="bar"><i id="sBar"></i></div>
+    <input type="search" id="sSearch" placeholder="Buscar um item" aria-label="Buscar item">
+    <div class="row" style="margin-top:12px;flex-wrap:wrap"><button class="chip" id="sFilter">Só o que uso nas minhas refeições</button><button class="chip" id="sClear">Desmarcar tudo</button></div>
+    <div class="muted" id="sNote" style="margin-top:8px"></div>
+  </div>
+  <div class="card"><div class="row"><input type="text" id="sNew" placeholder="Adicionar item" aria-label="Novo item" style="margin-top:0"><button class="btn" id="sAdd">Adicionar</button></div>
+  <div class="row"><select id="sCat" aria-label="Categoria"></select></div></div>
+  <div id="shopList"></div>
+</section>
+
+<section class="page" id="p-hist">
+  <h2 style="margin-top:6px">Meu histórico</h2>
+  <div class="seg"><button data-tab="charts" class="on">Gráficos</button><button data-tab="gallery">Galeria</button><button data-tab="backup">Backup</button></div>
+
+  <div id="t-charts">
+    <div class="seg two"><button data-range="w" class="on">Semana</button><button data-range="m">Mês</button></div>
+    <div class="card"><h3>Refeições registradas por dia</h3><div id="chart"></div>
+      <div class="stats"><div class="stat"><b id="sDays">0</b><span class="muted">dias com registro</span></div><div class="stat"><b id="sMeals">0</b><span class="muted">refeições marcadas</span></div><div class="stat"><b id="sPhotos">0</b><span class="muted">fotos</span></div></div></div>
+    <div class="card"><h3>Opções que você mais escolhe</h3><div id="ranking"></div></div>
+    <p class="muted">Esses números só mostram seus hábitos. Não há metas nem julgamento. 🌷</p>
+  </div>
+
+  <div id="t-gallery" hidden><div id="galleryBox"></div></div>
+
+  <div id="t-backup" hidden>
+    <div class="card"><h3>Guardar meus registros</h3>
+      <p class="muted" style="margin:6px 0 12px">O backup inclui refeições, observações, fotos, favoritos e lista de compras. Guarde o arquivo no Drive, e-mail ou WhatsApp.</p>
+      <div class="ma"><button class="btn" id="bkExport">Salvar backup</button><button class="btn ghost" id="bkCopy">Copiar texto do backup</button></div>
+      <div class="muted" id="bkStatus" style="margin-top:10px"></div></div>
+    <div class="card"><h3>Restaurar</h3>
+      <p class="muted" style="margin:6px 0 12px">Isso substitui o que está salvo neste aparelho.</p>
+      <label class="pbtn" style="display:inline-block">Escolher arquivo de backup<input type="file" id="bkFile" accept=".json,application/json"></label>
+      <details><summary>Restaurar colando o texto</summary><textarea id="bkText" rows="4" placeholder="Cole aqui o texto do backup"></textarea><button class="btn sm" id="bkPaste" style="margin-top:8px">Restaurar</button></details></div>
+  </div>
+</section>
+</main>
+
+<nav class="nav"><div>
+<button data-go="home" data-n="home"><span>⌂</span>Início</button>
+<button data-go="favs" data-n="favs"><span>♡</span>Favoritos</button>
+<button data-go="cal" data-n="cal"><span>▦</span>Calendário</button>
+<button data-go="shop" data-n="shop"><span>🛒</span>Compras</button>
+<button data-go="hist" data-n="hist"><span>✿</span>Histórico</button>
+</div></nav>
+<dialog id="lb"><img id="lbImg" alt="Foto da refeição"><p id="lbInfo" class="muted"></p><div class="ma"><button class="btn ghost sm" id="lbDel">Excluir foto</button><button class="btn sm" id="lbClose">Fechar</button></div></dialog>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const SAMPLE_MEALS=[
+{id:"breakfast",time:"06:00",title:"Café da manhã",emoji:"🍳",options:[{label:"Pão de forma",items:["Pão de forma — 2 fatias","Ovo de galinha — 2 unidades","Requeijão light ou abacate — 1 colher de sopa rasa (15 g) OU mussarela — 1 fatia","Leite — 1 copo (150 ml) com cacau em pó — 1 colher de sopa"]},{label:"Pão de sal",items:["Pão de sal — 1 unidade (substituição do pão de forma)","Ovo de galinha — 2 unidades","Requeijão light ou abacate — 1 colher de sopa rasa (15 g) OU mussarela — 1 fatia","Leite — 1 copo (150 ml) com cacau em pó — 1 colher de sopa"]},{label:"Tapioca",items:["Tapioca — 3 colheres de sopa cheias (60 g)","Ovo de galinha — 2 unidades","Requeijão light ou abacate — 1 colher de sopa rasa (15 g) OU mussarela — 1 fatia","Leite — 1 copo (150 ml) com cacau em pó — 1 colher de sopa"]},{label:"Torrada Bauducco",items:["Torrada Bauducco — 6 unidades (substituição do pão de forma)","Ovo de galinha — 2 unidades","Requeijão light ou abacate — 1 colher de sopa rasa (15 g) OU mussarela — 1 fatia","Leite — 1 copo (150 ml) com cacau em pó — 1 colher de sopa"]}]},
+{id:"morning",time:"09:30",title:"Lanche da manhã",emoji:"🍓",options:[{label:"Iogurte com fruta",items:["Iogurte natural — 1 potinho (170 g)","Aveia em flocos finos OU chia OU granola OU linhaça — 1 colher de sopa cheia (15 g)","Fruta — 1 porção"]}] ,alts:["Banana, maçã, pera, kiwi, laranja ou tangerina — 1 unidade média","Melancia — 1 fatia média","Manga — 1/2 unidade","Morango — 15 unidades","Uva — 12 unidades"]},
+{id:"lunch",time:"12:00",title:"Almoço",emoji:"🥗",options:[{label:"Arroz",items:["Arroz cozido — 4 colheres de sopa cheias (100 g)","Feijão cozido — 1 concha rasa (80 g)","Carne magra OU peito de frango OU peixe — 4 colheres de sopa cheias (100 g). Preferir assado, cozido ou grelhado; evitar frito ou embutido","Salada — metade do prato. Temperar com azeite e/ou limão","Sobremesa: chocolate — 1 porção (3–4 quadradinhos ou 1 bombom)"]},{label:"Macarrão (substituição do arroz)",items:["Macarrão cozido — 2 colheres de servir cheias (100 g)","Feijão cozido — 1 concha rasa (80 g)","Carne magra OU peito de frango OU peixe — 4 colheres de sopa cheias (100 g). Preferir assado, cozido ou grelhado; evitar frito ou embutido","Salada — metade do prato. Temperar com azeite e/ou limão","Sobremesa: chocolate — 1 porção (3–4 quadradinhos ou 1 bombom)"]},{label:"Batata inglesa (substituição do arroz)",items:["Batata inglesa cozida — 5 colheres de sopa cheias (150 g)","Feijão cozido — 1 concha rasa (80 g)","Carne magra OU peito de frango OU peixe — 4 colheres de sopa cheias (100 g). Preferir assado, cozido ou grelhado; evitar frito ou embutido","Salada — metade do prato. Temperar com azeite e/ou limão","Sobremesa: chocolate — 1 porção (3–4 quadradinhos ou 1 bombom)"]}]},
+{id:"snack",time:"16:00",title:"Lanche da tarde",emoji:"🍌",options:[{label:"Bebida proteica com fruta",items:["Bebida proteica OU barrinha proteica — 1 unidade. Preferir opções com mais de 15 g de proteína por porção na embalagem","Fruta — 1 porção"],alts:["Banana, maçã, pera, kiwi, laranja ou tangerina — 1 unidade média","Melancia — 1 fatia média","Manga — 1/2 unidade","Morango — 15 unidades","Uva — 12 unidades"]},{label:"Panqueca de banana",items:["Banana amassada — 1 porção","Ovo — 2 unidades","Aveia em flocos finos — 2 colheres de sopa"],recipe:"Em um bowl, misture os ingredientes. Se quiser, pode adicionar uma colherzinha de cacau. Faça mini panquecas na frigideira antiaderente, dourando dos dois lados. Finalize com um fiozinho de mel. Também pode levar ao micro-ondas em uma xícara ou potinho e fazer estilo muffin!",note:"No PDF, esta opção aparece com horário 09:30, embora esteja agrupada entre as opções do lanche da tarde. Confirme o horário com sua nutricionista."},{label:"Pão com patê",items:["Pão de forma — 2 fatias","Atum OU frango desfiado — 2 colheres de sopa OU ovo cozido — 1 unidade","Requeijão light — 1 colher de sopa cheia (30 g)"],alts:["Torrada Bauducco — 6 unidades (substituição do pão de forma)"],recipe:"Misture o atum, frango ou ovo com requeijão light e faça um patê. Se quiser, adicione orégano, cenoura ralada, tomatinho ou cebolinha."},{label:"Pipoca com fonte proteica",items:["Bebida proteica OU barrinha proteica OU iogurte natural — 1 unidade. Preferir opções com mais de 15 g de proteína por porção na embalagem","Milho de pipoca cru — 30 g"]}]},
+{id:"dinner",time:"20:00",title:"Jantar",emoji:"🍽️",options:[{label:"Padrão almoço",items:["Arroz cozido — 4 colheres de sopa cheias (100 g)","Feijão cozido — 1 concha rasa (80 g)","Carne magra OU peito de frango OU peixe — 4 colheres de sopa cheias (100 g). Preferir assado, cozido ou grelhado; evitar frito ou embutido","Salada — metade do prato. Temperar com azeite e/ou limão"]},{label:"Lanche caseiro",items:["Pão de sal OU pão de hambúrguer (Wickbold) OU wrap — 1 unidade","Hambúrguer caseiro — 100 g","Mussarela — 1 fatia","Salada (alface, rúcula, repolho, tomate, cebola roxa, picles...) — à vontade","Batata frita na air fryer — 1 xícara (80 g)"],recipe:"Misture e tempere a carne moída com sal, pimenta-do-reino e/ou temperinhos de sua preferência. Modele em formato de hambúrguer e doure na frigideira dos dois lados. Se preferir, prense a carne direto no pão ou wrap e leve à frigideira, estilo smash burger. Monte com mussarela e salada. Faça a batata na air fryer até dourar. Finalize com maionese light, ketchup ou mostarda com moderação."},{label:"Macarrão com molho de tomate",items:["Macarrão com molho de tomate caseiro — 3 colheres de servir (150 g)","Requeijão light — 1 colher de sopa","Carne magra OU peito de frango OU peixe — 4 colheres de sopa cheias (100 g). Preferir assado, cozido ou grelhado; evitar frito ou embutido","Salada — metade do prato. Temperar com azeite e/ou limão"]}]},
+{id:"supper",time:"22:00",title:"Ceia",emoji:"☕",options:[{label:"Leite com cacau",items:["Leite — 1 copo (150 ml) com cacau em pó — 1 colher de sopa"]},{label:"Chá de erva-doce",items:["Chá de erva-doce — 1 xícara","Açúcar ou mel — 1 colher de chá"]}]}
+];
+
+let meals=[],groceries=[];const cats=["Frutas","Verduras e legumes","Proteínas","Grãos e massas","Laticínios","Outros"];
+const SAMPLE_GROC=[["Abacaxi",0,["abacaxi","fruta"]],["Banana",0,["banana","fruta"]],["Batata",1,["batata"]],["Salada de folhas com molho (salsa, limão, azeite e sal)",1,["salada"]],["Salada de legumes cozidos no vapor",1,["salada"]],["Carne (acém, capa de contrafilé, costela, músculo, paleta, peito)",2,["carne"]],["Ovo de galinha",2,["ovo"]],["Whey 3W Chocolate 900 g (Max Titanium)",2,["proteica"]],["Arroz branco cozido",3,["arroz"]],["Farelo de aveia oat bran (Quaker)",3,["aveia"]],["Feijão",3,["feijão"]],["Granola Zero Açúcar 500 g (Ws Naturais)",3,["granola"]],["Lentilha cozida",3,["lentilha"]],["Macarrão cozido",3,["macarrão"]],["Pão francês",3,["pão de sal"]],["Iogurte natural (Vigor)",4,["iogurte"]],["Requeijão light (Danúbio)",4,["requeijão"]],["Café",5,["café"]],["Mel de abelha",5,["mel"]]];
+const $=id=>document.getElementById(id),esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const L=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}};
+const today=new Date();today.setHours(12,0,0,0);
+let sel=new Date(today),mCur=new Date(today.getFullYear(),today.getMonth(),1),page="home",range="w",onlyMine=false,lbRef=null;
+let records=L("mealDiary",{}),fav=L("mealFav3",[]).filter(x=>String(x).includes(":")),shop=L("shop3",{checked:{},custom:[]}),lastBk=L("lastBackup3",null);
+function save(){try{localStorage.setItem("mealDiary",JSON.stringify(records));localStorage.setItem("mealFav3",JSON.stringify(fav));localStorage.setItem("shop3",JSON.stringify(shop));if(lastBk)localStorage.setItem("lastBackup3",JSON.stringify(lastBk));return true}catch{toast("Sem espaço para salvar. Faça um backup e exclua fotos antigas.");return false}}
+function toast(t){const e=$("toast");e.textContent=t;e.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove("on"),3200)}
+const key=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+const parse=k=>{const[y,m,d]=k.split("-").map(Number);return new Date(y,m-1,d,12)};
+const fmt=(d,o={weekday:"long",day:"numeric",month:"long"})=>new Intl.DateTimeFormat("pt-BR",o).format(d);
+const getM=(id,k=key(sel))=>records[k]?.meals?.[id]||{};
+function setM(id,p){const k=key(sel);const r=records[k]||(records[k]={meals:{}});r.meals[id]={...(r.meals[id]||{}),...p};return save()}
+const optIdx=(v)=>Number.isInteger(v.option)?v.option:0;
+const hasRec=k=>Object.values(records[k]?.meals||{}).some(v=>v.done||v.option!==undefined||(v.photos||[]).length||v.note);
+const doneN=k=>Object.values(records[k]?.meals||{}).filter(v=>v.done).length;
+const mealOf=id=>meals.find(m=>m.id===id);
+
+function go(p){if(!plan)p="setup";page=p;document.querySelectorAll(".page").forEach(x=>x.classList.toggle("on",x.id==="p-"+p));const n=["day","set","setup"].includes(p)?"home":p;document.querySelectorAll("[data-n]").forEach(b=>b.classList.toggle("on",b.dataset.n===n));({setup:renderSetup,set:renderSet,home:renderHome,day:renderDay,favs:renderFavs,cal:renderCal,shop:renderShop,hist:renderHist})[p]();window.scrollTo(0,0)}
+document.addEventListener("click",e=>{const g=e.target.closest("[data-go]");if(g)go(g.dataset.go)});
+
+/* Plano, aparência e ajustes */
+const PALS=[["Rosé","#fbf6f4","#5e1f3a","#d98ca3","#f7e3e8","#fdf0f2","#efdde2"],["Lavanda","#f8f5fb","#3f2a63","#b69ce0","#ebe3f7","#f3eefa","#e2d9f0"],["Sálvia","#f5f8f4","#2c4a35","#8fbf9f","#dfeee3","#ebf4ee","#d6e5da"],["Pêssego","#fdf6f1","#7a3417","#f0a47c","#fbe4d6","#fdefe6","#f1dccf"],["Oceano","#f3f8fb","#17405c","#7fb6d6","#dcecf5","#e9f3f9","#d2e4ee"]];
+let plan=L("plan3",null),pal=L("pal3",0),cover=L("cover3",null),draft=null;
+function applyPlan(p){plan=p;meals=p.meals;groceries=p.groceries.map(g=>Array.isArray(g)?g:[g.n,g.c,[String(g.n).toLowerCase().split(/[ (,—-]/)[0]]])}
+function savePlan(p){applyPlan(p);try{localStorage.setItem("plan3",JSON.stringify(p))}catch{toast("Não foi possível salvar o plano.")}}
+if(plan)applyPlan(plan);
+function applyLook(){const p=PALS[pal]||PALS[0],r=document.documentElement.style;["--bg","--accent","--rose","--blush","--pale","--line"].forEach((v,i)=>r.setProperty(v,p[i+1]));document.querySelector("meta[name=theme-color]").content=p[2];const h=document.querySelector(".hero");h.classList.toggle("cv",!!cover);h.style.backgroundImage=cover?`linear-gradient(rgba(20,5,12,.15),rgba(20,5,12,.65)),url(${cover})`:""}
+function renderSet(){$("sws").innerHTML=PALS.map((p,i)=>`<button class="sw ${i===pal?"on":""}" data-pal="${i}" title="${p[0]}" aria-label="${p[0]}" style="background:linear-gradient(135deg,${p[2]} 50%,${p[3]} 50%)"></button>`).join("");$("palName").textContent=PALS[pal][0];$("coverRm").hidden=!cover;$("planInfo").textContent=plan?`Plano atual: ${meals.length} refeições e ${groceries.length} itens de compras. Ao atualizar, seu histórico é mantido.`:""}
+$("sws").onclick=e=>{const b=e.target.closest("[data-pal]");if(!b)return;pal=+b.dataset.pal;try{localStorage.setItem("pal3",pal)}catch{}applyLook();renderSet()};
+$("coverFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=await shrink(f,1000,.7);try{localStorage.setItem("cover3",JSON.stringify(d))}catch{return toast("Foto grande demais para salvar.")}cover=d;applyLook();renderSet();toast("Capa atualizada")}catch{toast("Não foi possível usar essa imagem.")}e.target.value=""};
+$("coverRm").onclick=()=>{cover=null;localStorage.removeItem("cover3");applyLook();renderSet()};
+$("planUpd").onclick=()=>{draft=null;go("setup")};
+const PROMPT=`Você lê planos alimentares e devolve APENAS JSON válido, sem texto extra, neste formato: {"meals":[{"time":"HH:MM","title":"Café da manhã","emoji":"🍳","options":[{"label":"nome curto da opção","items":["alimento — porção"],"alts":["alternativa"],"recipe":"modo de preparo"}]}],"groceries":[{"n":"item","c":0}]}. Regras: uma entrada em meals por refeição do dia, na ordem do plano. Cada opção ou substituição do plano vira um item de options, com items escritos como no plano, incluindo porções. Use alts só para alternativas listadas (como frutas) e recipe só se o plano trouxer modo de preparo. groceries é a lista de compras do plano; se não houver, deduza dos alimentos do plano. c é a categoria: 0 Frutas, 1 Verduras e legumes, 2 Proteínas, 3 Grãos e massas, 4 Laticínios, 5 Outros. Não invente alimentos que não estejam no plano. Escreva em português.`;
+const _g=(o,...k)=>{for(const x of k)if(o&&o[x]!==undefined&&o[x]!==null)return o[x]};
+const _list=v=>Array.isArray(v)?v.map(i=>typeof i==="object"&&i?Object.values(i).filter(x=>typeof x!=="object").join(" — "):String(i)).filter(Boolean):typeof v==="string"?v.split(/\n|;/).map(x=>x.trim()).filter(Boolean):[];
+function normalize(o){if(Array.isArray(o))o={meals:o};const raw=_g(o,"meals","refeicoes","refeições","plano","plan","refeicao");if(!Array.isArray(raw)||!raw.length)throw{code:"bad"};
+const ms=raw.map((m,i)=>{let ops=_g(m,"options","opcoes","opções","opcao","opção","variants","alternativas_refeicao");if(!Array.isArray(ops)){const it=_list(_g(m,"items","itens","alimentos","foods"));ops=it.length?[{label:"Opção 1",items:it}]:[]}
+return{id:"m"+i,time:String(_g(m,"time","horario","horário","hora")||""),title:String(_g(m,"title","titulo","título","nome","name","refeicao","refeição")||"Refeição"),emoji:_g(m,"emoji","icone","ícone")||"🍽️",options:ops.map((x,j)=>{if(typeof x==="string")x={label:"Opção "+(j+1),items:[x]};const it=_list(_g(x,"items","itens","alimentos","foods","ingredientes"));const al=_list(_g(x,"alts","alternativas","substituicoes","substituições")),rc=_g(x,"recipe","receita","modo_preparo","modo_de_preparo","preparo");return it.length?{label:String(_g(x,"label","nome","name","titulo","título","opcao","opção")||"Opção "+(j+1)),items:it,...(al.length?{alts:al}:{}),...(rc?{recipe:String(rc)}:{})}:null}).filter(Boolean)}}).filter(m=>m.options.length);
+if(!ms.length)throw{code:"bad"};
+const gr=_g(o,"groceries","compras","lista_compras","lista_de_compras","lista","supermercado")||[];
+const gs=(Array.isArray(gr)?gr:_list(gr)).map(g=>{if(typeof g==="string")return{n:g,c:5};let c=_g(g,"c","categoria","category");if(typeof c==="string"){const k=cats.findIndex(x=>x.toLowerCase().startsWith(c.toLowerCase().slice(0,4)));c=k<0?5:k}return{n:String(_g(g,"n","nome","item","name")||""),c:Math.min(5,Math.max(0,+c||0))}}).filter(g=>g.n);
+return{meals:ms,groceries:gs}}
+function parseLoose(s){s=String(s);const a=s.search(/[\[{]/),b=Math.max(s.lastIndexOf("}"),s.lastIndexOf("]"));if(a<0||b<a)throw{code:"nojson"};const x=s.slice(a,b+1);try{return JSON.parse(x)}catch{}try{return JSON.parse(x.replace(/[“”„]/g,'"').replace(/[‘’]/g,"'").replace(/,\s*([}\]])/g,"$1"))}catch{throw{code:"badjson"}}}
+function renderSetup(){$("setupBack").hidden=!plan;$("draftBox").innerHTML=draft?`<div class="card"><h3>Confira o seu plano</h3><p class="muted" style="margin:6px 0 10px">${draft.meals.length} refeições e ${draft.groceries.length} itens de compras. Toque em uma refeição para ver as opções. Se faltar algo, adicione abaixo.</p>${draft.meals.map((m,i)=>`<details><summary>${m.emoji} ${esc(m.time)} ${esc(m.title)} · ${m.options.length} opções</summary><ul>${m.options.map(o=>`<li>${esc(o.label)}</li>`).join("")}</ul><button class="btn ghost sm" data-rmmeal="${i}">Remover refeição</button></details>`).join("")}
+<details><summary>＋ Adicionar uma refeição que faltou</summary><input type="text" id="addT" placeholder="Nome (ex.: Ceia)" aria-label="Nome da refeição"><input type="text" id="addH" placeholder="Horário (ex.: 22:00)" aria-label="Horário"><textarea id="addI" rows="3" placeholder="Alimentos, um por linha" aria-label="Alimentos"></textarea><button class="btn sm" data-act="add" style="margin-top:8px">Adicionar</button></details>
+<div class="ma"><button class="btn" data-act="use">Usar este plano</button><button class="btn ghost" data-act="drop">Descartar</button></div></div>`:""}
+$("draftBox").onclick=e=>{const b=e.target.closest("button");if(!b)return;const a=b.dataset.act;if(a==="use"){savePlan(draft);draft=null;go("home");toast("Plano atualizado")}if(a==="drop"){draft=null;renderSetup()}
+if(b.dataset.rmmeal!==undefined){draft.meals.splice(+b.dataset.rmmeal,1);if(!draft.meals.length)draft=null;renderSetup()}
+if(a==="add"){const t=$("addT").value.trim(),it=$("addI").value.split("\n").map(x=>x.trim()).filter(Boolean);if(!t||!it.length)return toast("Informe o nome e ao menos um alimento.");draft.meals.push({id:"m"+Date.now(),time:$("addH").value.trim(),title:t,emoji:"🍽️",options:[{label:"Opção 1",items:it}]});renderSetup();toast("Refeição adicionada")}};
+$("jsCopy").onclick=async()=>{try{await navigator.clipboard.writeText(PROMPT+" Responda somente com o JSON válido, dentro de um bloco de código, sem comentários e sem vírgula depois do último item. Se eu enviar fotos, leia todas as páginas até o fim.");toast("Instruções copiadas")}catch{toast("Não foi possível copiar neste aparelho.")}};
+$("jsGo").onclick=()=>{try{draft=normalize(parseLoose($("jsText").value));$("jsText").value="";renderSetup();toast("Plano lido. Confira o resultado acima.")}catch(e){toast(e?.code==="bad"?"O texto foi lido, mas não encontrei as refeições. Peça à IA para seguir exatamente o formato das instruções.":e?.code==="nojson"?"Não encontrei um JSON no texto colado. Copie a resposta completa da IA.":"O JSON está incompleto ou com erro. Peça à IA: responda de novo só com o JSON completo.")}};
+$("planSample").onclick=()=>{savePlan({meals:SAMPLE_MEALS,groceries:SAMPLE_GROC});go("home")};
+
+/* Início */
+function renderHome(){const h=today.getHours?new Date().getHours():12;$("hHello").textContent=(h<12?"Bom dia":h<18?"Boa tarde":"Boa noite")+" 🌷";$("hDate").textContent=fmt(today);const k=key(today),d=doneN(k);$("hProg").textContent=`${d} de ${meals.length} refeições`;
+$("petals").innerHTML=meals.map(m=>`<button class="petal ${getM(m.id,k).done?"d":""}" data-today="${m.id}" aria-label="${m.title}">${m.emoji}<small>${m.time}</small></button>`).join("");
+const pend=groceries.length+shop.custom.length-Object.values(shop.checked).filter(Boolean).length;$("hShop").textContent=pend>0?`${pend} itens na lista`:"Lista completa";$("hFav").textContent=fav.length?`${fav.length} guardadas`:"Suas opções preferidas";
+const st=matchMedia("(display-mode: standalone)").matches||navigator.standalone;$("installCard").hidden=!!st}
+$("petals").onclick=e=>{if(e.target.closest("[data-today]")){sel=new Date(today);go("day")}};
+$("qDiary").onclick=()=>{sel=new Date(today);go("day")};
+
+/* Diário */
+function details(o){let s=`<h4>Itens desta opção</h4><ul>${o.items.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`;if(o.alts)s+=`<h4>Alternativas do plano</h4><ul>${o.alts.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`;if(o.recipe)s+=`<h4>Modo de preparo</h4><p>${esc(o.recipe)}</p>`;if(o.note)s+=`<div class="note">${esc(o.note)}</div>`;return s}
+function renderDay(){const k=key(sel);$("dLabel").textContent=fmt(sel);const d=doneN(k);$("dBar").style.width=d/meals.length*100+"%";$("dTxt").textContent=`${d} de ${meals.length} refeições marcadas`;
+$("dayMeals").innerHTML=meals.map(m=>{const v=getM(m.id),i=optIdx(v),o=m.options[i]||m.options[0],f=fav.includes(m.id+":"+i);const alts=m.alts&&!o.alts?`<h4>Alternativas do plano</h4><ul>${m.alts.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:"";
+return `<article class="meal ${v.done?"done":""}" data-m="${m.id}"><div class="mh"><div class="em">${m.emoji}</div><div class="mi"><div class="tm">${m.time}</div><h3>${m.title}</h3></div><button class="heart ${f?"on":""}" data-fav="${m.id}" aria-label="Favoritar esta opção" aria-pressed="${f}">${f?"♥":"♡"}</button></div>
+<select data-opt="${m.id}" aria-label="Opção de ${m.title}">${m.options.map((x,j)=>`<option value="${j}" ${j===i?"selected":""}>${esc(x.label)}</option>`).join("")}</select>
+<details><summary>Ver itens e preparo</summary>${details(o)}${alts}</details>
+<textarea data-note="${m.id}" rows="2" placeholder="Observações: como se sentiu, o que mudou…" aria-label="Observações de ${m.title}">${esc(v.note||"")}</textarea>
+<div class="ma"><button class="tog ${v.done?"on":""}" data-done="${m.id}">${v.done?"✓ Refeição feita":"Marcar como feita"}</button><label class="pbtn">＋ Foto<input type="file" accept="image/*" data-photo="${m.id}"></label></div>
+<div class="ph">${(v.photos||[]).map((s,n)=>`<div class="w"><img src="${s}" alt="Foto de ${m.title}"><button class="x" data-rm="${m.id}:${n}" aria-label="Remover foto">×</button></div>`).join("")}</div></article>`}).join("")}
+const dm=$("dayMeals");
+dm.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const D=b.dataset;
+if(D.done){setM(D.done,{done:!getM(D.done).done});renderDay()}
+else if(D.fav){const id=D.fav+":"+optIdx(getM(D.fav));fav=fav.includes(id)?fav.filter(x=>x!==id):[...fav,id];save();renderDay();toast(fav.includes(id)?"Guardada nos favoritos":"Removida dos favoritos")}
+else if(D.rm){const[id,n]=D.rm.split(":");const ph=[...(getM(id).photos||[])];ph.splice(+n,1);setM(id,{photos:ph});renderDay()}});
+dm.addEventListener("change",async e=>{const t=e.target;
+if(t.dataset.opt){setM(t.dataset.opt,{option:+t.value});renderDay()}
+else if(t.dataset.photo&&t.files[0]){try{const data=await shrink(t.files[0]);const id=t.dataset.photo,ph=[...(getM(id).photos||[]),data];if(!setM(id,{photos:ph}))setM(id,{photos:ph.slice(0,-1)});renderDay()}catch{toast("Não foi possível usar essa imagem.")}}});
+dm.addEventListener("input",e=>{if(e.target.dataset.note)setM(e.target.dataset.note,{note:e.target.value})});
+function shrink(file,max=900,q=.72,asBlob=false){return new Promise((ok,no)=>{const img=new Image(),u=URL.createObjectURL(file);img.onload=()=>{const s=Math.min(1,max/Math.max(img.width,img.height)),c=document.createElement("canvas");c.width=Math.round(img.width*s);c.height=Math.round(img.height*s);c.getContext("2d").drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(u);asBlob?c.toBlob(b=>ok(b),"image/jpeg",q):ok(c.toDataURL("image/jpeg",q))};img.onerror=no;img.src=u})}
+const shiftDay=n=>{sel.setDate(sel.getDate()+n);mCur=new Date(sel.getFullYear(),sel.getMonth(),1);renderDay()};$("prevD").onclick=()=>shiftDay(-1);$("nextD").onclick=()=>shiftDay(1);
+
+/* Favoritos */
+function counts(from,to){const c={};Object.keys(records).forEach(k=>{if(from&&(k<from||k>to))return;Object.entries(records[k].meals||{}).forEach(([id,v])=>{if(v.done||Number.isInteger(v.option)){const x=id+":"+optIdx(v);c[x]=(c[x]||0)+1}})});return c}
+function renderFavs(){const c=counts();$("favList").innerHTML=fav.length?fav.map(f=>{const[id,i]=f.split(":"),m=mealOf(id),o=m?.options[+i];if(!o)return"";return `<div class="card"><div class="mh"><div class="em">${m.emoji}</div><div class="mi"><div class="tm">${m.title} · ${m.time}</div><h3>${esc(o.label)}</h3><div class="muted">${c[f]?`Escolhida ${c[f]}x`:"Ainda não registrada"}</div></div></div><div class="ma"><button class="btn sm" data-use="${f}">Usar hoje</button><button class="btn ghost sm" data-unfav="${f}">Remover</button></div></div>`}).join(""):'<div class="empty">♡<br>Nenhuma favorita ainda.<br>Abra o diário e toque no coração de uma opção.</div>'}
+$("favList").onclick=e=>{const b=e.target.closest("button");if(!b)return;if(b.dataset.unfav){fav=fav.filter(x=>x!==b.dataset.unfav);save();renderFavs()}if(b.dataset.use){const[id,i]=b.dataset.use.split(":");sel=new Date(today);setM(id,{option:+i});go("day");toast("Opção aplicada ao dia de hoje")}};
+
+/* Calendário */
+function renderCal(){const y=mCur.getFullYear(),m=mCur.getMonth(),st=new Date(y,m,1).getDay(),n=new Date(y,m+1,0).getDate();$("mLabel").textContent=fmt(mCur,{month:"long",year:"numeric"});let h="";for(let i=0;i<42;i++){const x=i-st+1,d=new Date(y,m,x,12),k=key(d);h+=`<button class="dy ${x>0&&x<=n?"":"m"} ${k===key(sel)?"s":""} ${k===key(today)?"t":""}" data-d="${k}">${d.getDate()}${hasRec(k)?"<i></i>":""}</button>`}$("calDays").innerHTML=h}
+$("calDays").onclick=e=>{const b=e.target.closest("[data-d]");if(b){sel=parse(b.dataset.d);go("day")}};
+$("pM").onclick=()=>{mCur.setMonth(mCur.getMonth()-1);renderCal()};$("nM").onclick=()=>{mCur.setMonth(mCur.getMonth()+1);renderCal()};$("goToday").onclick=()=>{sel=new Date(today);mCur=new Date(today.getFullYear(),today.getMonth(),1);go("day")};
+
+/* Compras */
+$("sCat").innerHTML=cats.map((c,i)=>`<option value="${i}">${c}</option>`).join("");
+function topText(){const c=counts(),top=Object.entries(c).sort((a,b)=>b[1]-a[1]).slice(0,5);if(!top.length)return null;return top.map(([f])=>{const[id,i]=f.split(":"),o=mealOf(id)?.options[+i];return o?(o.label+" "+o.items.join(" ")+" "+(mealOf(id).alts||o.alts||[]).join(" ")).toLowerCase():""}).join(" ")}
+function renderShop(){const q=$("sSearch").value.toLowerCase().trim(),tt=topText();$("sNote").textContent=onlyMine?(tt?"Mostrando itens das 5 opções que você mais escolhe.":"Registre algumas refeições para ativar este filtro."):"";
+const all=[...groceries.map(([n,c,k])=>({id:n,n,c,k})),...shop.custom.map((x,i)=>({id:"c:"+x.id,n:x.n,c:x.c,cu:x.id}))];const done=all.filter(x=>shop.checked[x.id]).length;
+$("sCount").textContent=`${done}/${all.length}`;$("sBar").style.width=(all.length?done/all.length*100:0)+"%";$("sFilter").classList.toggle("on",onlyMine);
+const vis=all.filter(x=>x.n.toLowerCase().includes(q)&&(!onlyMine||!tt||x.cu||x.k.some(k=>tt.includes(k))));
+$("shopList").innerHTML=cats.map((c,ci)=>{const l=vis.filter(x=>x.c===ci);return l.length?`<div class="cat">${c}</div><div class="card" style="margin-top:6px;padding:6px 16px">${l.map(x=>`<label class="it ${shop.checked[x.id]?"c":""}"><input type="checkbox" data-s="${esc(x.id)}" ${shop.checked[x.id]?"checked":""}><span>${esc(x.n)}</span>${x.cu?`<button class="rm" data-rmc="${x.cu}" aria-label="Excluir item">×</button>`:""}</label>`).join("")}</div>`:""}).join("")||'<div class="empty">Nenhum item encontrado.</div>'}
+$("shopList").addEventListener("change",e=>{if(e.target.dataset.s!==undefined){shop.checked[e.target.dataset.s]=e.target.checked;save();renderShop()}});
+$("shopList").addEventListener("click",e=>{const b=e.target.closest("[data-rmc]");if(b){e.preventDefault();shop.custom=shop.custom.filter(x=>String(x.id)!==b.dataset.rmc);save();renderShop()}});
+$("sSearch").oninput=renderShop;$("sFilter").onclick=()=>{onlyMine=!onlyMine;renderShop()};$("sClear").onclick=()=>{shop.checked={};save();renderShop()};
+function addItem(){const n=$("sNew").value.trim();if(!n)return;shop.custom.push({id:Date.now(),n,c:+$("sCat").value});$("sNew").value="";save();renderShop()}
+$("sAdd").onclick=addItem;$("sNew").onkeydown=e=>{if(e.key==="Enter")addItem()};
+
+/* Histórico */
+function renderHist(){const t=document.querySelector("[data-tab].on").dataset.tab;["charts","gallery","backup"].forEach(x=>$("t-"+x).hidden=x!==t);({charts:renderCharts,gallery:renderGallery,backup:renderBackup})[t]()}
+document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-tab]").forEach(x=>x.classList.toggle("on",x===b));renderHist()});
+document.querySelectorAll("[data-range]").forEach(b=>b.onclick=()=>{range=b.dataset.range;document.querySelectorAll("[data-range]").forEach(x=>x.classList.toggle("on",x===b));renderCharts()});
+function renderCharts(){let days=[];if(range==="w"){for(let i=6;i>=0;i--){const d=new Date(today);d.setDate(d.getDate()-i);days.push(d)}}else{const y=today.getFullYear(),m=today.getMonth(),n=new Date(y,m+1,0).getDate();for(let i=1;i<=n;i++)days.push(new Date(y,m,i,12))}
+const keys=days.map(key),vals=keys.map(doneN),n=days.length,w=range==="w"?44:24;let s=`<svg viewBox="0 0 ${n*w} 150" width="100%" role="img" aria-label="Gráfico de refeições por dia">`;
+days.forEach((d,i)=>{const v=vals[i],h=v?v/6*100:3,x=i*w+w*.18,bw=w*.64,isT=keys[i]===key(today);s+=`<rect x="${x}" y="${110-h}" width="${bw}" height="${h}" rx="${bw/3}" fill="${v?(isT?"var(--accent)":"var(--rose)"):"var(--line)"}"/>`;if(range==="w"||v)s+=`<text x="${x+bw/2}" y="${104-h}" font-size="11" text-anchor="middle">${v||""}</text>`;if(range==="w"||d.getDate()%5===0||d.getDate()===1)s+=`<text x="${x+bw/2}" y="132" font-size="${range==="w"?11:10}" text-anchor="middle">${range==="w"?fmt(d,{weekday:"short"}).replace(".",""):d.getDate()}</text>`});$("chart").innerHTML=s+"</svg>";
+const act=keys.filter(hasRec);$("sDays").textContent=act.length;$("sMeals").textContent=vals.reduce((a,b)=>a+b,0);$("sPhotos").textContent=act.reduce((a,k)=>a+Object.values(records[k].meals).reduce((x,v)=>x+(v.photos||[]).length,0),0);
+const c=counts(keys[0],keys[n-1]),r=Object.entries(c).sort((a,b)=>b[1]-a[1]),mx=r[0]?.[1]||1;
+$("ranking").innerHTML=r.length?r.map(([f,v])=>{const[id,i]=f.split(":"),m=mealOf(id),o=m?.options[+i];return o?`<div class="rk"><div><span>${m.emoji} ${m.title} · ${esc(o.label)}</span><b>${v}x</b></div><div class="bar"><i style="width:${v/mx*100}%"></i></div></div>`:""}).join(""):'<div class="empty">Suas escolhas aparecem aqui conforme você registra os dias.</div>';
+requestAnimationFrame(()=>{document.querySelectorAll("#ranking .bar i").forEach(i=>i.style.width=i.style.width)})}
+function renderGallery(){const ks=Object.keys(records).sort().reverse();let h="",tot=0;ks.forEach(k=>{const ph=[];Object.entries(records[k].meals||{}).forEach(([id,v])=>(v.photos||[]).forEach((s,n)=>ph.push({id,n,s})));if(!ph.length)return;tot+=ph.length;h+=`<div class="gh">${fmt(parse(k),{weekday:"long",day:"numeric",month:"long",year:"numeric"})}</div><div class="gal">${ph.map(p=>`<button data-lb="${k}|${p.id}|${p.n}" aria-label="Abrir foto"><img src="${p.s}" alt=""><span>${mealOf(p.id)?.title||""}</span></button>`).join("")}</div>`});$("galleryBox").innerHTML=h||'<div class="empty">📷<br>As fotos que você adicionar no diário aparecem aqui, organizadas por data.</div>'}
+$("galleryBox").onclick=e=>{const b=e.target.closest("[data-lb]");if(!b)return;lbRef=b.dataset.lb.split("|");const[k,id,n]=lbRef,v=records[k].meals[id];$("lbImg").src=v.photos[+n];$("lbInfo").textContent=`${mealOf(id).title} · ${fmt(parse(k))}${v.note?" — "+v.note:""}`;$("lb").showModal()};
+$("lbClose").onclick=()=>$("lb").close();$("lb").onclick=e=>{if(e.target.id==="lb")$("lb").close()};
+$("lbDel").onclick=()=>{if(!lbRef)return;const[k,id,n]=lbRef;records[k].meals[id].photos.splice(+n,1);save();$("lb").close();renderGallery()};
+
+/* Backup */
+const payload=()=>JSON.stringify({app:"plano-alimentar",version:3,exportedAt:new Date().toISOString(),records,fav,shop});
+function renderBackup(){const hasData=Object.keys(records).length>0;$("bkStatus").textContent=lastBk?`Último backup: ${fmt(new Date(lastBk),{day:"numeric",month:"long",year:"numeric"})}.`:(hasData?"Você ainda não fez nenhum backup.":"Quando tiver registros, faça seu primeiro backup aqui.")}
+function marked(){lastBk=Date.now();save();renderBackup()}
+$("bkExport").onclick=async()=>{const name=`plano-alimentar-backup-${key(today)}.json`;let f;try{f=new File([payload()],name,{type:"application/json"})}catch{}
+try{const dl=await window.claude?.use("downloads");if(dl){await dl.save({filename:name,data:payload()});marked();return}}catch(e){if(e?.code==="declined")return}
+try{if(f&&navigator.canShare?.({files:[f]})){await navigator.share({files:[f],title:name});marked();return}}catch(e){if(e.name==="AbortError")return}
+try{const a=document.createElement("a");a.href=URL.createObjectURL(f||new Blob([payload()]));a.download=name;document.body.appendChild(a);a.click();a.remove();marked();toast("Backup salvo")}catch{toast("Não foi possível salvar o arquivo. Use Copiar texto do backup.")}};
+$("bkCopy").onclick=async()=>{try{await navigator.clipboard.writeText(payload());marked();toast("Texto copiado. Cole em um lugar seguro, como um e-mail para você.")}catch{toast("Não foi possível copiar neste aparelho.")}};
+function restore(txt){try{const d=JSON.parse(txt);if(d.app!=="plano-alimentar"||!d.records)throw 0;if(!confirm("Substituir os registros atuais pelo backup?"))return;records=d.records;fav=(d.fav||[]).filter(x=>String(x).includes(":"));shop=d.shop||{checked:{},custom:[]};save();renderBackup();toast("Backup restaurado")}catch{toast("Esse arquivo não parece ser um backup do Meu plano alimentar.")}}
+$("bkFile").onchange=async e=>{const f=e.target.files[0];if(f)restore(await f.text());e.target.value=""};$("bkPaste").onclick=()=>restore($("bkText").value);
+
+/* Instalação */
+let dp=null;addEventListener("beforeinstallprompt",e=>{e.preventDefault();dp=e});
+$("installBtn").onclick=async()=>{if(dp){dp.prompt();await dp.userChoice;dp=null}else{$("installHelp").open=true}};
+addEventListener("appinstalled",()=>{$("installCard").hidden=true});
+applyLook();go("home");
+if("serviceWorker"in navigator&&location.protocol.startsWith("http"))addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
+</script>
+</body>
+</html>
